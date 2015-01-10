@@ -8,5 +8,12 @@
 		<p>Here you go!</p>
 		<button id="twitterLogin">login</button>
 	</body>
-	<script src="/scripts/login.js"></script>
+	<script src="jspm_packages/system.js"></script>
+	  <script src="config.js"></script>
+	  <script>
+	    System.baseURL = '/';
+	    // `app` is our project name, corresponding to the local `lib` folder
+	    // these two properties are set in the `jspm init -p` prompts
+	    System.import('lib/main');
+	  </script>
 </html>

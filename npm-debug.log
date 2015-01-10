@@ -1,0 +1,264 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'jspm', '-g' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose cache add [ 'jspm', null ]
+5 verbose cache add name=undefined spec="jspm" args=["jspm",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'jspm',
+6 verbose parsed url   path: 'jspm',
+6 verbose parsed url   href: 'jspm' }
+7 silly lockFile 40e8134c-jspm jspm
+8 verbose lock jspm /Users/blakefeggans/.npm/40e8134c-jspm.lock
+9 silly lockFile 40e8134c-jspm jspm
+10 silly lockFile 40e8134c-jspm jspm
+11 verbose addNamed [ 'jspm', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile f3b9302e-jspm jspm@
+14 verbose lock jspm@ /Users/blakefeggans/.npm/f3b9302e-jspm.lock
+15 silly addNameRange { name: 'jspm', range: '*', hasData: false }
+16 verbose request where is /jspm
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 2c4c71f0628fb1d3
+19 verbose url raw /jspm
+20 verbose url resolving [ 'https://registry.npmjs.org/', './jspm' ]
+21 verbose url resolved https://registry.npmjs.org/jspm
+22 verbose request where is https://registry.npmjs.org/jspm
+23 info trying registry request attempt 1 at 14:20:26
+24 http GET https://registry.npmjs.org/jspm
+25 http 200 https://registry.npmjs.org/jspm
+26 silly registry.get cb [ 200,
+26 silly registry.get   { date: 'Sat, 10 Jan 2015 19:20:24 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"8FVQSTARHUTF5BI5ZXO1VUNS1"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '114550',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-iad2128-IAD',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1420917624.196424,VS0,VE599',
+26 silly registry.get     vary: 'Accept',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly addNameRange number 2 { name: 'jspm', range: '*', hasData: true }
+28 silly addNameRange versions [ 'jspm',
+28 silly addNameRange   [ '0.0.1',
+28 silly addNameRange     '0.0.2',
+28 silly addNameRange     '0.0.3',
+28 silly addNameRange     '0.0.4',
+28 silly addNameRange     '0.0.5',
+28 silly addNameRange     '0.0.6',
+28 silly addNameRange     '0.0.7',
+28 silly addNameRange     '0.0.8',
+28 silly addNameRange     '0.1.0',
+28 silly addNameRange     '0.1.1',
+28 silly addNameRange     '0.2.0',
+28 silly addNameRange     '0.3.0',
+28 silly addNameRange     '0.3.1',
+28 silly addNameRange     '0.3.2',
+28 silly addNameRange     '0.3.3',
+28 silly addNameRange     '0.3.4',
+28 silly addNameRange     '0.3.5',
+28 silly addNameRange     '0.3.6',
+28 silly addNameRange     '0.3.7',
+28 silly addNameRange     '0.3.8',
+28 silly addNameRange     '0.3.9',
+28 silly addNameRange     '0.3.10',
+28 silly addNameRange     '0.4.0',
+28 silly addNameRange     '0.4.1',
+28 silly addNameRange     '0.4.2',
+28 silly addNameRange     '0.4.3',
+28 silly addNameRange     '0.5.0-beta',
+28 silly addNameRange     '0.5.0',
+28 silly addNameRange     '0.5.1',
+28 silly addNameRange     '0.5.2',
+28 silly addNameRange     '0.5.3',
+28 silly addNameRange     '0.5.4',
+28 silly addNameRange     '0.5.5',
+28 silly addNameRange     '0.5.6',
+28 silly addNameRange     '0.5.7',
+28 silly addNameRange     '0.5.8',
+28 silly addNameRange     '0.5.9',
+28 silly addNameRange     '0.5.10',
+28 silly addNameRange     '0.5.11',
+28 silly addNameRange     '0.5.12',
+28 silly addNameRange     '0.5.13',
+28 silly addNameRange     '0.5.14',
+28 silly addNameRange     '0.5.15',
+28 silly addNameRange     '0.5.16',
+28 silly addNameRange     '0.6.0',
+28 silly addNameRange     '0.6.1',
+28 silly addNameRange     '0.6.2',
+28 silly addNameRange     '0.6.3',
+28 silly addNameRange     '0.6.4',
+28 silly addNameRange     '0.6.5',
+28 silly addNameRange     '0.6.6',
+28 silly addNameRange     '0.6.7',
+28 silly addNameRange     '0.6.8',
+28 silly addNameRange     '0.6.9',
+28 silly addNameRange     '0.6.10',
+28 silly addNameRange     '0.6.11',
+28 silly addNameRange     '0.6.12',
+28 silly addNameRange     '0.7.0-beta.1',
+28 silly addNameRange     '0.7.0-beta.2',
+28 silly addNameRange     '0.7.0-beta.3',
+28 silly addNameRange     '0.7.0-beta.4',
+28 silly addNameRange     '0.7.0-beta.5',
+28 silly addNameRange     '0.7.0-beta.6',
+28 silly addNameRange     '0.7.0-beta.7',
+28 silly addNameRange     '0.7.0-beta.8',
+28 silly addNameRange     '0.7.0-beta.9',
+28 silly addNameRange     '0.7.0-beta.10',
+28 silly addNameRange     '0.6.13',
+28 silly addNameRange     '0.7.0-beta.11',
+28 silly addNameRange     '0.7.0-beta.12',
+28 silly addNameRange     '0.7.0-beta.13',
+28 silly addNameRange     '0.7.0-beta.14',
+28 silly addNameRange     '0.7.0-beta.15',
+28 silly addNameRange     '0.7.0-beta.16',
+28 silly addNameRange     '0.7.0-beta.17',
+28 silly addNameRange     '0.7.0-beta.18',
+28 silly addNameRange     '0.7.0-beta.19',
+28 silly addNameRange     '0.7.0-beta.20',
+28 silly addNameRange     '0.7.0',
+28 silly addNameRange     '0.7.1',
+28 silly addNameRange     '0.8.0-beta.1',
+28 silly addNameRange     '0.8.0-beta.2',
+28 silly addNameRange     '0.8.0-beta.3',
+28 silly addNameRange     '0.8.0-beta.4',
+28 silly addNameRange     '0.7.2',
+28 silly addNameRange     '0.8.0-beta.5',
+28 silly addNameRange     '0.8.0-beta.6',
+28 silly addNameRange     '0.7.3',
+28 silly addNameRange     '0.8.0-beta.7',
+28 silly addNameRange     '0.8.0-beta.8',
+28 silly addNameRange     '0.8.0-beta.9',
+28 silly addNameRange     '0.8.0-beta.10',
+28 silly addNameRange     '0.8.0-beta.11',
+28 silly addNameRange     '0.8.0-beta.12',
+28 silly addNameRange     '0.8.0',
+28 silly addNameRange     '0.8.1',
+28 silly addNameRange     '0.8.2',
+28 silly addNameRange     '0.8.3',
+28 silly addNameRange     '0.8.4',
+28 silly addNameRange     '0.9.0-beta.1',
+28 silly addNameRange     '0.8.5',
+28 silly addNameRange     '0.9.0-beta.2',
+28 silly addNameRange     '0.8.6',
+28 silly addNameRange     '0.9.0',
+28 silly addNameRange     '0.10.0',
+28 silly addNameRange     '0.10.1',
+28 silly addNameRange     '0.10.2',
+28 silly addNameRange     '0.10.3',
+28 silly addNameRange     '0.10.4' ] ]
+29 verbose addNamed [ 'jspm', '0.10.4' ]
+30 verbose addNamed [ '0.10.4', '0.10.4' ]
+31 silly lockFile b4fe281c-jspm-0-10-4 jspm@0.10.4
+32 verbose lock jspm@0.10.4 /Users/blakefeggans/.npm/b4fe281c-jspm-0-10-4.lock
+33 silly lockFile c3babcbd-y-npmjs-org-jspm-jspm-0-10-4-tgz https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+34 verbose lock https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz /Users/blakefeggans/.npm/c3babcbd-y-npmjs-org-jspm-jspm-0-10-4-tgz.lock
+35 verbose addRemoteTarball [ 'https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz',
+35 verbose addRemoteTarball   '17212137dcd0d0a41580c8b44876d8195f55062b' ]
+36 info retry fetch attempt 1 at 14:20:26
+37 verbose fetch to= /var/folders/6d/k7hnl8k56sl43kfq0t7kh73c0000gn/T/npm-34400-ElSJdxJx/registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+38 http GET https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+39 http 200 https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+40 silly lockFile c3babcbd-y-npmjs-org-jspm-jspm-0-10-4-tgz https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+41 silly lockFile c3babcbd-y-npmjs-org-jspm-jspm-0-10-4-tgz https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz
+42 silly lockFile b4fe281c-jspm-0-10-4 jspm@0.10.4
+43 silly lockFile b4fe281c-jspm-0-10-4 jspm@0.10.4
+44 silly lockFile f3b9302e-jspm jspm@
+45 silly lockFile f3b9302e-jspm jspm@
+46 silly resolved [ { name: 'jspm',
+46 silly resolved     description: 'Registry and format agnostic JavaScript package manager',
+46 silly resolved     version: '0.10.4',
+46 silly resolved     main: './api.js',
+46 silly resolved     author: '',
+46 silly resolved     dependencies:
+46 silly resolved      { glob: '~4.3.2',
+46 silly resolved        'graceful-fs': '^3.0.5',
+46 silly resolved        'jspm-github': '~0.9.9',
+46 silly resolved        'jspm-npm': '~0.15.1',
+46 silly resolved        'jspm-registry': '~0.3.2',
+46 silly resolved        liftoff: '^0.13.2',
+46 silly resolved        minimatch: '^0.2.14',
+46 silly resolved        mkdirp: '~0.3.5',
+46 silly resolved        ncp: '~0.6.0',
+46 silly resolved        request: '^2.45.0',
+46 silly resolved        rimraf: '~2.2.2',
+46 silly resolved        rsvp: '~3.0.3',
+46 silly resolved        semver: '~4.0.3',
+46 silly resolved        'systemjs-builder': '~0.5.1',
+46 silly resolved        systemjs: '^0.11.0',
+46 silly resolved        traceur: '0.0.79',
+46 silly resolved        'uglify-js': '~2.4.10' },
+46 silly resolved     registry: 'npm',
+46 silly resolved     devDependencies: { mocha: '~1.17.1' },
+46 silly resolved     repository: { type: 'git', url: 'https://github.com/jspm/jspm.git' },
+46 silly resolved     bin: { jspm: './jspm.js' },
+46 silly resolved     scripts: { test: 'mocha' },
+46 silly resolved     bugs: { url: 'https://github.com/jspm/jspm/issues' },
+46 silly resolved     homepage: 'https://github.com/jspm/jspm',
+46 silly resolved     directories: { test: 'test' },
+46 silly resolved     license: 'Apache 2.0',
+46 silly resolved     gitHead: 'b016e14fabe7a0376b33598d03029794864baa28',
+46 silly resolved     _id: 'jspm@0.10.4',
+46 silly resolved     _shasum: '17212137dcd0d0a41580c8b44876d8195f55062b',
+46 silly resolved     _from: 'jspm@',
+46 silly resolved     _npmVersion: '1.4.28',
+46 silly resolved     _npmUser: { name: 'guybedford', email: 'guybedford@gmail.com' },
+46 silly resolved     maintainers: [ [Object] ],
+46 silly resolved     dist:
+46 silly resolved      { shasum: '17212137dcd0d0a41580c8b44876d8195f55062b',
+46 silly resolved        tarball: 'http://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz' },
+46 silly resolved     _resolved: 'https://registry.npmjs.org/jspm/-/jspm-0.10.4.tgz' } ]
+47 info install jspm@0.10.4 into /usr/local/lib
+48 info installOne jspm@0.10.4
+49 verbose lib/node_modules/jspm unbuild
+50 verbose tar unpack /Users/blakefeggans/.npm/jspm/0.10.4/package.tgz
+51 silly lockFile 9e846ed4--usr-local-lib-node-modules-jspm tar:///usr/local/lib/node_modules/jspm
+52 verbose lock tar:///usr/local/lib/node_modules/jspm /Users/blakefeggans/.npm/9e846ed4--usr-local-lib-node-modules-jspm.lock
+53 silly lockFile c71e6853-gans-npm-jspm-0-10-4-package-tgz tar:///Users/blakefeggans/.npm/jspm/0.10.4/package.tgz
+54 verbose lock tar:///Users/blakefeggans/.npm/jspm/0.10.4/package.tgz /Users/blakefeggans/.npm/c71e6853-gans-npm-jspm-0-10-4-package-tgz.lock
+55 silly gunzTarPerm modes [ '755', '644' ]
+56 error Error: EACCES, mkdir '/usr/local/lib/node_modules/jspm'
+56 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/jspm']
+56 error   errno: 3,
+56 error   code: 'EACCES',
+56 error   path: '/usr/local/lib/node_modules/jspm',
+56 error   fstream_type: 'Directory',
+56 error   fstream_path: '/usr/local/lib/node_modules/jspm',
+56 error   fstream_class: 'DirWriter',
+56 error   fstream_stack:
+56 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+56 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+56 error      'Object.oncomplete (fs.js:107:15)' ] }
+57 error Please try running this command again as root/Administrator.
+58 error System Darwin 14.0.0
+59 error command "node" "/usr/local/bin/npm" "install" "jspm" "-g"
+60 error cwd /Users/blakefeggans/trip-plan
+61 error node -v v0.10.32
+62 error npm -v 1.4.28
+63 error path /usr/local/lib/node_modules/jspm
+64 error fstream_path /usr/local/lib/node_modules/jspm
+65 error fstream_type Directory
+66 error fstream_class DirWriter
+67 error code EACCES
+68 error errno 3
+69 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/jspm'
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+70 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+70 error fstream_stack Object.oncomplete (fs.js:107:15)
+71 verbose exit [ 3, true ]
