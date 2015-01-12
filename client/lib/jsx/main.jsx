@@ -67,22 +67,93 @@ var Authentication = {
 /*
  * Dashboard Component
  */
-
 var Dashboard = React.createClass({
   mixins: [ Authentication ],
 
   render: function () {
-  	// TODO implement
+    // TODO implement
     var token = Auth.getToken();
     return (
       <div>
         <h1>Dashboard</h1>
         <p>Your Twitter token - {token}</p>
-        <h2>Create a trip</h2>
-        <h2>See your trips</h2>
+        <List />
         <h2>See all public trips</h2>
       </div>
     );
+  }
+});
+
+var TripList = React.createClass({
+  render: function(){
+    var createItem = function(trip, index) {
+        return (
+          <tr key={ index }>
+            <td><a href="#">{ trip.destination }</a></td>
+            <td>{ trip.travelDates }</td>
+          </tr>
+        )
+      };
+    return (
+      <table>
+        <thead>
+          <th>Destination</th>
+          <th>Travel Dates</th>
+        </thead>
+        <tbody>{ this.props.trips.map(createItem) }</tbody>
+      </table>
+    )
+  }
+});
+
+var List = React.createClass({
+  getInitialState: function() {
+    this.trips = [];
+    return {trips: [],destination: "",travelDates: ""};
+  },
+  componentWillMount: function() {
+    this.firebaseRef = new Firebase("https://trip-plan.firebaseio.com/trips/");
+    this.firebaseRef.on("child_added", function(snapshot) {
+      this.trips.push(snapshot.val());
+      this.setState({trips: this.trips});
+    }.bind(this));
+  },
+  componentWillUnmount: function() {
+    this.firebaseRef.off();
+  },
+  destinationOnChange: function(e){
+    this.setState({destination: e.target.value});
+  },
+  travelDatesOnChange: function(e){
+    this.setState({travelDates: e.target.value});
+  },
+  tripCreate: function(e) {
+    e.preventDefault();
+    if (this.state.destination && this.state.destination.trim().length !== 0 &&
+        this.state.travelDates && this.state.travelDates.trim().length !== 0) {
+      this.firebaseRef.push({
+        destination: this.state.destination,
+        travelDates: this.state.travelDates
+      });
+      console.log(this);
+      this.setState({destination: "",travelDates: ""});
+      console.log('but here?');
+    }
+  },
+  render: function() {
+    return (
+      <div>
+        <h1>Ball Hard</h1>
+        <h2>Create a trip</h2>
+        <form onSubmit={ this.tripCreate }>
+          <input onChange={ this.destinationOnChange } value={ this.state.destination } placeholder="Enter destination..."/>
+          <input onChange={ this.travelDatesOnChange } value={ this.state.travelDates } placeholder="Enter travel dates..."/>
+          <button type="submit">Add</button>
+        </form>
+        <h2>See your trips</h2>
+        <TripList trips={ this.state.trips } />
+      </div>
+    )
   }
 });
 

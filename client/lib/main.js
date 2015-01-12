@@ -67,22 +67,93 @@ var Authentication = {
 /*
  * Dashboard Component
  */
-
 var Dashboard = React.createClass({displayName: "Dashboard",
   mixins: [ Authentication ],
 
   render: function () {
-  	// TODO implement
+    // TODO implement
     var token = Auth.getToken();
     return (
       React.createElement("div", null, 
         React.createElement("h1", null, "Dashboard"), 
         React.createElement("p", null, "Your Twitter token - ", token), 
-        React.createElement("h2", null, "Create a trip"), 
-        React.createElement("h2", null, "See your trips"), 
+        React.createElement(List, null), 
         React.createElement("h2", null, "See all public trips")
       )
     );
+  }
+});
+
+var TripList = React.createClass({displayName: "TripList",
+  render: function(){
+    var createItem = function(trip, index) {
+        return (
+          React.createElement("tr", {key: index }, 
+            React.createElement("td", null, React.createElement("a", {href: "#"},  trip.destination)), 
+            React.createElement("td", null,  trip.travelDates)
+          )
+        )
+      };
+    return (
+      React.createElement("table", null, 
+        React.createElement("thead", null, 
+          React.createElement("th", null, "Destination"), 
+          React.createElement("th", null, "Travel Dates")
+        ), 
+        React.createElement("tbody", null,  this.props.trips.map(createItem) )
+      )
+    )
+  }
+});
+
+var List = React.createClass({displayName: "List",
+  getInitialState: function() {
+    this.trips = [];
+    return {trips: [],destination: "",travelDates: ""};
+  },
+  componentWillMount: function() {
+    this.firebaseRef = new Firebase("https://trip-plan.firebaseio.com/trips/");
+    this.firebaseRef.on("child_added", function(snapshot) {
+      this.trips.push(snapshot.val());
+      this.setState({trips: this.trips});
+    }.bind(this));
+  },
+  componentWillUnmount: function() {
+    this.firebaseRef.off();
+  },
+  destinationOnChange: function(e){
+    this.setState({destination: e.target.value});
+  },
+  travelDatesOnChange: function(e){
+    this.setState({travelDates: e.target.value});
+  },
+  tripCreate: function(e) {
+    e.preventDefault();
+    if (this.state.destination && this.state.destination.trim().length !== 0 &&
+        this.state.travelDates && this.state.travelDates.trim().length !== 0) {
+      this.firebaseRef.push({
+        destination: this.state.destination,
+        travelDates: this.state.travelDates
+      });
+      console.log(this);
+      this.setState({destination: "",travelDates: ""});
+      console.log('but here?');
+    }
+  },
+  render: function() {
+    return (
+      React.createElement("div", null, 
+        React.createElement("h1", null, "Ball Hard"), 
+        React.createElement("h2", null, "Create a trip"), 
+        React.createElement("form", {onSubmit:  this.tripCreate}, 
+          React.createElement("input", {onChange:  this.destinationOnChange, value:  this.state.destination, placeholder: "Enter destination..."}), 
+          React.createElement("input", {onChange:  this.travelDatesOnChange, value:  this.state.travelDates, placeholder: "Enter travel dates..."}), 
+          React.createElement("button", {type: "submit"}, "Add")
+        ), 
+        React.createElement("h2", null, "See your trips"), 
+        React.createElement(TripList, {trips:  this.state.trips})
+      )
+    )
   }
 });
 
