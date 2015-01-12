@@ -4,16 +4,12 @@
 		<script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
 	</head>
 	<body>
-		<h1>Trip Planner</h1>
-		<p>Here you go!</p>
-		<button id="twitterLogin">login</button>
+		<div id="app"></div>
 	</body>
 	<script src="jspm_packages/system.js"></script>
-	  <script src="config.js"></script>
-	  <script>
+	<script src="config.js"></script>
+	<script>
 	    System.baseURL = '/';
-	    // `app` is our project name, corresponding to the local `lib` folder
-	    // these two properties are set in the `jspm init -p` prompts
 	    System.import('lib/main');
-	  </script>
+	</script>
 </html>
