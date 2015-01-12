@@ -17,7 +17,13 @@
       "baseURL": "client"
     },
     "dependencies": {
-      "jquery": "^2.1.3"
+      "gulp-react": "npm:gulp-react@^2.0.0",
+      "jquery": "^2.1.3",
+      "react": "^0.12.2",
+      "react-router": "^0.11.6"
     }
+  },
+  "devDependencies": {
+    "gulp-react": "^2.0.0"
   }
 }
