@@ -35,7 +35,7 @@ var App = React.createClass({displayName: "App",
       React.createElement(Link, {to: "login"}, "Sign in");
 
     if(this.state.loggedIn) {
-    	var dashboardLink = React.createElement("li", null, React.createElement(Link, {to: "dashboard"}, "Dashboard"));
+      var dashboardLink = React.createElement("li", null, React.createElement(Link, {to: "dashboard"}, "Dashboard"));
     }
 
     return (
@@ -43,7 +43,7 @@ var App = React.createClass({displayName: "App",
         React.createElement("ul", null, 
           React.createElement("li", null, loginOrOut), 
           React.createElement("li", null, React.createElement(Link, {to: "about"}, "About")), 
-       		dashboardLink
+          dashboardLink
         ), 
         React.createElement(RouteHandler, null)
       )
@@ -109,8 +109,8 @@ var TripList = React.createClass({displayName: "TripList",
 
 var Trip = React.createClass({displayName: "Trip",
 
-	// TODO
-	// router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
+  // TODO
+  // router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
 
   render: function() {
     return (
@@ -127,14 +127,14 @@ var List = React.createClass({displayName: "List",
   },
   componentWillMount: function() {
 
-  	this.TripApi = new TripApi({
-  		// TODO look into better way to handle this event
-  		// we want to hide firebase implementation details
-  		// like `snapshot.val()` from this componenet
-  		onChildAdded: function(snapshot) {
-	      this.addTripToList(snapshot.val());
-	    }.bind(this)
-  	});
+    this.TripApi = new TripApi({
+      // TODO look into better way to handle this event
+      // we want to hide firebase implementation details
+      // like `snapshot.val()` from this componenet
+      onChildAdded: function(snapshot) {
+        this.addTripToList(snapshot.val());
+      }.bind(this)
+    });
 
   },
   componentWillUnmount: function() {
@@ -147,7 +147,7 @@ var List = React.createClass({displayName: "List",
     this.setState({travelDates: e.target.value});
   },
   addTripToList: function(trip) {
-  	this.trips.push(trip);
+    this.trips.push(trip);
     this.setState({trips: this.trips});
   },
   createTrip: function(e) {
@@ -155,39 +155,39 @@ var List = React.createClass({displayName: "List",
 
     this.validateForm().then(function(result) {
 
-    	this.TripApi.createTrip({
+      this.TripApi.createTrip({
         destination: this.state.destination,
         travelDates: this.state.travelDates
       });
       this.resetForm();
 
     }.bind(this), function(err) {
-    	this.setState({formError: "Fill in something!"});
+      this.setState({formError: "Fill in something!"});
     }.bind(this));
 
   },
   validateForm: function() {
 
-  	// TODO implement this method on keydown of input fields
+    // TODO implement this method on keydown of input fields
 
-  	return new Promise(function(resolve,reject) {
+    return new Promise(function(resolve,reject) {
 
-  		if (this.state.destination &&
-  				this.state.destination.trim().length !== 0 &&
-        	this.state.travelDates &&
-        	this.state.travelDates.trim().length !== 0) {
+      if (this.state.destination &&
+          this.state.destination.trim().length !== 0 &&
+          this.state.travelDates &&
+          this.state.travelDates.trim().length !== 0) {
 
-  			resolve();
+        resolve();
 
-  		} else {
-  			reject();
-  		}
+      } else {
+        reject();
+      }
 
-  	}.bind(this));
+    }.bind(this));
 
   },
   resetForm: function(){
-  	this.setState({destination: "",travelDates: "",formError: ""});
+    this.setState({destination: "",travelDates: "",formError: ""});
   },
   render: function() {
     return (
@@ -289,7 +289,7 @@ var Logout = React.createClass({displayName: "Logout",
 // ala trip/:id
 var routes = (
   React.createElement(Route, {handler: App}, 
-  	React.createElement(DefaultRoute, {handler: Dashboard}), 
+    React.createElement(DefaultRoute, {handler: Dashboard}), 
     React.createElement(Route, {name: "login", handler: Login, addHandlerKey: true}), 
     React.createElement(Route, {name: "logout", handler: Logout}), 
     React.createElement(Route, {name: "about", handler: About}), 

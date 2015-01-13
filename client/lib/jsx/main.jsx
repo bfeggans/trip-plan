@@ -35,7 +35,7 @@ var App = React.createClass({
       <Link to="login">Sign in</Link>;
 
     if(this.state.loggedIn) {
-    	var dashboardLink = <li><Link to="dashboard">Dashboard</Link></li>;
+      var dashboardLink = <li><Link to="dashboard">Dashboard</Link></li>;
     }
 
     return (
@@ -43,7 +43,7 @@ var App = React.createClass({
         <ul>
           <li>{loginOrOut}</li>
           <li><Link to="about">About</Link></li>
-       		{dashboardLink}
+          {dashboardLink}
         </ul>
         <RouteHandler/>
       </div>
@@ -109,8 +109,8 @@ var TripList = React.createClass({
 
 var Trip = React.createClass({
 
-	// TODO
-	// router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
+  // TODO
+  // router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
 
   render: function() {
     return (
@@ -127,14 +127,14 @@ var List = React.createClass({
   },
   componentWillMount: function() {
 
-  	this.TripApi = new TripApi({
-  		// TODO look into better way to handle this event
-  		// we want to hide firebase implementation details
-  		// like `snapshot.val()` from this componenet
-  		onChildAdded: function(snapshot) {
-	      this.addTripToList(snapshot.val());
-	    }.bind(this)
-  	});
+    this.TripApi = new TripApi({
+      // TODO look into better way to handle this event
+      // we want to hide firebase implementation details
+      // like `snapshot.val()` from this componenet
+      onChildAdded: function(snapshot) {
+        this.addTripToList(snapshot.val());
+      }.bind(this)
+    });
 
   },
   componentWillUnmount: function() {
@@ -147,7 +147,7 @@ var List = React.createClass({
     this.setState({travelDates: e.target.value});
   },
   addTripToList: function(trip) {
-  	this.trips.push(trip);
+    this.trips.push(trip);
     this.setState({trips: this.trips});
   },
   createTrip: function(e) {
@@ -155,39 +155,39 @@ var List = React.createClass({
 
     this.validateForm().then(function(result) {
 
-    	this.TripApi.createTrip({
+      this.TripApi.createTrip({
         destination: this.state.destination,
         travelDates: this.state.travelDates
       });
       this.resetForm();
 
     }.bind(this), function(err) {
-    	this.setState({formError: "Fill in something!"});
+      this.setState({formError: "Fill in something!"});
     }.bind(this));
 
   },
   validateForm: function() {
 
-  	// TODO implement this method on keydown of input fields
+    // TODO implement this method on keydown of input fields
 
-  	return new Promise(function(resolve,reject) {
+    return new Promise(function(resolve,reject) {
 
-  		if (this.state.destination &&
-  				this.state.destination.trim().length !== 0 &&
-        	this.state.travelDates &&
-        	this.state.travelDates.trim().length !== 0) {
+      if (this.state.destination &&
+          this.state.destination.trim().length !== 0 &&
+          this.state.travelDates &&
+          this.state.travelDates.trim().length !== 0) {
 
-  			resolve();
+        resolve();
 
-  		} else {
-  			reject();
-  		}
+      } else {
+        reject();
+      }
 
-  	}.bind(this));
+    }.bind(this));
 
   },
   resetForm: function(){
-  	this.setState({destination: "",travelDates: "",formError: ""});
+    this.setState({destination: "",travelDates: "",formError: ""});
   },
   render: function() {
     return (
@@ -289,7 +289,7 @@ var Logout = React.createClass({
 // ala trip/:id
 var routes = (
   <Route handler={App}>
-  	<DefaultRoute handler={Dashboard}/>
+    <DefaultRoute handler={Dashboard}/>
     <Route name="login" handler={Login} addHandlerKey={true} />
     <Route name="logout" handler={Logout}/>
     <Route name="about" handler={About}/>
