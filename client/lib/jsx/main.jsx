@@ -90,7 +90,7 @@ var TripList = React.createClass({
     var createItem = function(trip, index) {
         return (
           <tr key={ index }>
-            <td><a href="#">{ trip.destination }</a></td>
+            <td><Link to="trip" params={trip}>{ trip.destination }</Link></td>
             <td>{ trip.travelDates }</td>
           </tr>
         )
@@ -105,6 +105,19 @@ var TripList = React.createClass({
       </table>
     )
   }
+});
+
+var Trip = React.createClass({
+
+	// TODO
+	// router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
+
+  render: function() {
+    return (
+      <h1>Trip Details</h1>
+    )
+  }
+
 });
 
 var List = React.createClass({
@@ -272,6 +285,8 @@ var Logout = React.createClass({
  * Define Routes
  */
 
+// TODO we need to refer to a trip by id not destination
+// ala trip/:id
 var routes = (
   <Route handler={App}>
   	<DefaultRoute handler={Dashboard}/>
@@ -279,6 +294,7 @@ var routes = (
     <Route name="logout" handler={Logout}/>
     <Route name="about" handler={About}/>
     <Route name="dashboard" handler={Dashboard}/>
+    <Route name="trip" path="trip/:destination" handler={Trip}/>
   </Route>
 );
 

@@ -90,7 +90,7 @@ var TripList = React.createClass({displayName: "TripList",
     var createItem = function(trip, index) {
         return (
           React.createElement("tr", {key: index }, 
-            React.createElement("td", null, React.createElement("a", {href: "#"},  trip.destination)), 
+            React.createElement("td", null, React.createElement(Link, {to: "trip", params: trip},  trip.destination)), 
             React.createElement("td", null,  trip.travelDates)
           )
         )
@@ -105,6 +105,19 @@ var TripList = React.createClass({displayName: "TripList",
       )
     )
   }
+});
+
+var Trip = React.createClass({displayName: "Trip",
+
+	// TODO
+	// router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
+
+  render: function() {
+    return (
+      React.createElement("h1", null, "Trip Details")
+    )
+  }
+
 });
 
 var List = React.createClass({displayName: "List",
@@ -272,13 +285,16 @@ var Logout = React.createClass({displayName: "Logout",
  * Define Routes
  */
 
+// TODO we need to refer to a trip by id not destination
+// ala trip/:id
 var routes = (
   React.createElement(Route, {handler: App}, 
   	React.createElement(DefaultRoute, {handler: Dashboard}), 
     React.createElement(Route, {name: "login", handler: Login, addHandlerKey: true}), 
     React.createElement(Route, {name: "logout", handler: Logout}), 
     React.createElement(Route, {name: "about", handler: About}), 
-    React.createElement(Route, {name: "dashboard", handler: Dashboard})
+    React.createElement(Route, {name: "dashboard", handler: Dashboard}), 
+    React.createElement(Route, {name: "trip", path: "trip/:destination", handler: Trip})
   )
 );
 
