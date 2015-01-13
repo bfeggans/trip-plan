@@ -3,6 +3,8 @@ import Auth from 'lib/auth';
 import React from 'react';
 import Router from 'react-router';
 
+import {TripApi} from 'lib/services/TripApi';
+
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
 /*
@@ -33,7 +35,7 @@ var App = React.createClass({displayName: "App",
       React.createElement(Link, {to: "login"}, "Sign in");
 
     if(this.state.loggedIn) {
-    	var dashboardLink = React.createElement("li", null, React.createElement(Link, {to: "dashboard"}, "Dashboard"));
+      var dashboardLink = React.createElement("li", null, React.createElement(Link, {to: "dashboard"}, "Dashboard"));
     }
 
     return (
@@ -41,7 +43,7 @@ var App = React.createClass({displayName: "App",
         React.createElement("ul", null, 
           React.createElement("li", null, loginOrOut), 
           React.createElement("li", null, React.createElement(Link, {to: "about"}, "About")), 
-       		dashboardLink
+          dashboardLink
         ), 
         React.createElement(RouteHandler, null)
       )
@@ -71,7 +73,6 @@ var Dashboard = React.createClass({displayName: "Dashboard",
   mixins: [ Authentication ],
 
   render: function () {
-    // TODO implement
     var token = Auth.getToken();
     return (
       React.createElement("div", null, 
@@ -89,7 +90,7 @@ var TripList = React.createClass({displayName: "TripList",
     var createItem = function(trip, index) {
         return (
           React.createElement("tr", {key: index }, 
-            React.createElement("td", null, React.createElement("a", {href: "#"},  trip.destination)), 
+            React.createElement("td", null, React.createElement(Link, {to: "trip", params: trip},  trip.destination)), 
             React.createElement("td", null,  trip.travelDates)
           )
         )
@@ -106,20 +107,38 @@ var TripList = React.createClass({displayName: "TripList",
   }
 });
 
+var Trip = React.createClass({displayName: "Trip",
+
+  // TODO
+  // router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
+
+  render: function() {
+    return (
+      React.createElement("h1", null, "Trip Details")
+    )
+  }
+
+});
+
 var List = React.createClass({displayName: "List",
   getInitialState: function() {
     this.trips = [];
     return {trips: [],destination: "",travelDates: ""};
   },
   componentWillMount: function() {
-    this.firebaseRef = new Firebase("https://trip-plan.firebaseio.com/trips/");
-    this.firebaseRef.on("child_added", function(snapshot) {
-      this.trips.push(snapshot.val());
-      this.setState({trips: this.trips});
-    }.bind(this));
+
+    this.TripApi = new TripApi({
+      // TODO look into better way to handle this event
+      // we want to hide firebase implementation details
+      // like `snapshot.val()` from this componenet
+      onChildAdded: function(snapshot) {
+        this.addTripToList(snapshot.val());
+      }.bind(this)
+    });
+
   },
   componentWillUnmount: function() {
-    this.firebaseRef.off();
+    this.TripApi.firebaseRef.off();
   },
   destinationOnChange: function(e){
     this.setState({destination: e.target.value});
@@ -127,28 +146,59 @@ var List = React.createClass({displayName: "List",
   travelDatesOnChange: function(e){
     this.setState({travelDates: e.target.value});
   },
-  tripCreate: function(e) {
+  addTripToList: function(trip) {
+    this.trips.push(trip);
+    this.setState({trips: this.trips});
+  },
+  createTrip: function(e) {
     e.preventDefault();
-    if (this.state.destination && this.state.destination.trim().length !== 0 &&
-        this.state.travelDates && this.state.travelDates.trim().length !== 0) {
-      this.firebaseRef.push({
+
+    this.validateForm().then(function(result) {
+
+      this.TripApi.createTrip({
         destination: this.state.destination,
         travelDates: this.state.travelDates
       });
-      console.log(this);
-      this.setState({destination: "",travelDates: ""});
-      console.log('but here?');
-    }
+      this.resetForm();
+
+    }.bind(this), function(err) {
+      this.setState({formError: "Fill in something!"});
+    }.bind(this));
+
+  },
+  validateForm: function() {
+
+    // TODO implement this method on keydown of input fields
+
+    return new Promise(function(resolve,reject) {
+
+      if (this.state.destination &&
+          this.state.destination.trim().length !== 0 &&
+          this.state.travelDates &&
+          this.state.travelDates.trim().length !== 0) {
+
+        resolve();
+
+      } else {
+        reject();
+      }
+
+    }.bind(this));
+
+  },
+  resetForm: function(){
+    this.setState({destination: "",travelDates: "",formError: ""});
   },
   render: function() {
     return (
       React.createElement("div", null, 
         React.createElement("h1", null, "Ball Hard"), 
         React.createElement("h2", null, "Create a trip"), 
-        React.createElement("form", {onSubmit:  this.tripCreate}, 
+        React.createElement("form", {onSubmit:  this.createTrip}, 
           React.createElement("input", {onChange:  this.destinationOnChange, value:  this.state.destination, placeholder: "Enter destination..."}), 
           React.createElement("input", {onChange:  this.travelDatesOnChange, value:  this.state.travelDates, placeholder: "Enter travel dates..."}), 
-          React.createElement("button", {type: "submit"}, "Add")
+          React.createElement("button", {type: "submit"}, "Add"), 
+          React.createElement("span", null, this.state.formError)
         ), 
         React.createElement("h2", null, "See your trips"), 
         React.createElement(TripList, {trips:  this.state.trips})
@@ -235,13 +285,16 @@ var Logout = React.createClass({displayName: "Logout",
  * Define Routes
  */
 
+// TODO we need to refer to a trip by id not destination
+// ala trip/:id
 var routes = (
   React.createElement(Route, {handler: App}, 
-  	React.createElement(DefaultRoute, {handler: Dashboard}), 
+    React.createElement(DefaultRoute, {handler: Dashboard}), 
     React.createElement(Route, {name: "login", handler: Login, addHandlerKey: true}), 
     React.createElement(Route, {name: "logout", handler: Logout}), 
     React.createElement(Route, {name: "about", handler: About}), 
-    React.createElement(Route, {name: "dashboard", handler: Dashboard})
+    React.createElement(Route, {name: "dashboard", handler: Dashboard}), 
+    React.createElement(Route, {name: "trip", path: "trip/:destination", handler: Trip})
   )
 );
 
