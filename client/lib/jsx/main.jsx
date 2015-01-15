@@ -5,11 +5,15 @@ import Router from 'react-router';
 
 import {TripApi} from 'lib/services/TripApi';
 
+// common react components
 import About from 'lib/modules/common/About';
 import Dashboard from 'lib/modules/common/Dashboard';
 import Login from 'lib/modules/common/Login';
 import Logout from 'lib/modules/common/Logout';
+
+// trip react component
 import Trip from 'lib/modules/trips/TripDetail';
+
 
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
@@ -70,7 +74,7 @@ var routes = (
     <Route name="logout" handler={Logout}/>
     <Route name="about" handler={About}/>
     <Route name="dashboard" handler={Dashboard}/>
-    <Route name="trip" path="trip/:destination" handler={Trip}/>
+    <Route name="trip" path="trip/:id" handler={Trip}/>
   </Route>
 );
 

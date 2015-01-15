@@ -82,7 +82,7 @@ var TripMain = React.createClass({
           <span>{this.state.formError}</span>
         </form>
         <h2>See your trips</h2>
-        <TripList trips={ this.state.trips }/>
+        <TripList trips={ this.state.trips } />
       </div>
     )
   }

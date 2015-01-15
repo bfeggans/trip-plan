@@ -5,11 +5,15 @@ import Router from 'react-router';
 
 import {TripApi} from 'lib/services/TripApi';
 
+// common react components
 import About from 'lib/modules/common/About';
 import Dashboard from 'lib/modules/common/Dashboard';
 import Login from 'lib/modules/common/Login';
 import Logout from 'lib/modules/common/Logout';
+
+// trip react component
 import Trip from 'lib/modules/trips/TripDetail';
+
 
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
@@ -70,7 +74,7 @@ var routes = (
     React.createElement(Route, {name: "logout", handler: Logout}), 
     React.createElement(Route, {name: "about", handler: About}), 
     React.createElement(Route, {name: "dashboard", handler: Dashboard}), 
-    React.createElement(Route, {name: "trip", path: "trip/:destination", handler: Trip})
+    React.createElement(Route, {name: "trip", path: "trip/:id", handler: Trip})
   )
 );
 

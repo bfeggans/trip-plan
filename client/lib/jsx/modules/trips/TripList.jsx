@@ -11,7 +11,6 @@ var TripList = React.createClass({
           <tr key={ index }>
             <td><Link to="trip" params={trip}>{ trip.destination }</Link></td>
             <td>{ trip.travelDates }</td>
-            <td onClick={ that.props.removeTrip }>x</td>
           </tr>
         )
       };
@@ -21,7 +20,7 @@ var TripList = React.createClass({
           <th>Destination</th>
           <th>Travel Dates</th>
         </thead>
-        <tbody>{ that.props.trips.map(createItem) }</tbody>
+        <tbody>{ this.props.trips.map(createItem) }</tbody>
       </table>
     )
   }

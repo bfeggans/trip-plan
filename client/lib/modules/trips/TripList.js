@@ -10,8 +10,7 @@ var TripList = React.createClass({displayName: "TripList",
         return (
           React.createElement("tr", {key: index }, 
             React.createElement("td", null, React.createElement(Link, {to: "trip", params: trip},  trip.destination)), 
-            React.createElement("td", null,  trip.travelDates), 
-            React.createElement("td", {onClick:  that.props.removeTrip}, "x")
+            React.createElement("td", null,  trip.travelDates)
           )
         )
       };
@@ -21,7 +20,7 @@ var TripList = React.createClass({displayName: "TripList",
           React.createElement("th", null, "Destination"), 
           React.createElement("th", null, "Travel Dates")
         ), 
-        React.createElement("tbody", null,  that.props.trips.map(createItem) )
+        React.createElement("tbody", null,  this.props.trips.map(createItem) )
       )
     )
   }

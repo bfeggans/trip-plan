@@ -9,9 +9,12 @@ export class TripApi {
 
   }
   createTrip(attrs) {
+    let id = this.firebaseRef.push().key();
+
     this.firebaseRef.push({
       destination: attrs.destination,
-      travelDates: attrs.travelDates
+      travelDates: attrs.travelDates,
+      id: id
     });
   }
 }
