@@ -2,11 +2,11 @@ var gulp = require('gulp');
 var react = require('gulp-react');
 
 gulp.task('default', function () {
-  return gulp.src('./client/lib/jsx/**/*.jsx')
+  return gulp.src('./app/components/**/*.jsx')
     .pipe(react())
-    .pipe(gulp.dest('./client/lib'));
+    .pipe(gulp.dest('./client/scripts/components'));
 });
 
 gulp.task('watch', function(){
-	gulp.watch('./client/lib/jsx/**/*.jsx',['default']);
+	gulp.watch('./app/components/**/*.jsx',['default']);
 });
