@@ -1,0 +1,25 @@
+body {
+	margin-top: 0px;
+	background: #fff;
+}
+
+.half-width {
+	width: 50%;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.centered,
+.ui.button.centered {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.vertically-spaced,
+.ui.button.vertically-spaced {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}

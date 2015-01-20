@@ -2,14 +2,17 @@
 	<head>
 		<title>Trip Planner</title>
 		<script src="https://cdn.firebase.com/js/client/2.1.0/firebase.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/semantic.min.css">
+		<script src="styles/semantic.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/main.css">
 	</head>
 	<body>
 		<div id="app"></div>
 	</body>
-	<script src="jspm_packages/system.js"></script>
-	<script src="config.js"></script>
+	<script src="scripts/jspm_packages/system.js"></script>
+	<script src="scripts/config.js"></script>
 	<script>
-	    System.baseURL = '/';
-	    System.import('lib/main');
+	    System.baseURL = '/scripts';
+	    System.import('components/main');
 	</script>
 </html>
