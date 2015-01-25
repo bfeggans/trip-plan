@@ -11,7 +11,9 @@ var TripCreator = React.createClass({
   getInitialState: function() {
     return {
       destination: "",
-      travelDates: ""
+      travelDates: "",
+      name: "",
+      description: ""
     };
   },
   destinationOnChange: function(e){
@@ -20,22 +22,30 @@ var TripCreator = React.createClass({
   travelDatesOnChange: function(e){
     this.setState({travelDates: e.target.value});
   },
+  descriptionOnChange: function(e){
+    this.setState({description: e.target.value});
+  },
+  nameOnChange: function(e){
+    this.setState({name: e.target.value});
+  },
+  inviteesOnChange: function(e){
+    var invitees = e.target.value.split(',');
+    this.setState({invitees: invitees});
+  },
   createTrip: function(e) {
     e.preventDefault();
 
     this.validateForm().then(function(result) {
 
       TripActions.createTrip({
+        name: this.state.name,
+        description: this.state.description,
         destination: this.state.destination,
-        travelDates: this.state.travelDates
+        travelDates: this.state.travelDates,
+        invitees: this.state.invitees
       }, function (trip) {
-
-        console.log(trip);
-
         this.transitionTo('trip', { id: trip.id });
       }.bind(this));
-
-      // TODO need to jump to trip details after creation
 
       this.resetForm();
 
@@ -72,11 +82,11 @@ var TripCreator = React.createClass({
       <form className="ui form" onSubmit={ this.createTrip }>
         <div className="field">
           <label>Describe the trip</label>
-          <textarea placeholder="Consider yourself a salesperson for this trip"></textarea>
+          <textarea onChange={ this.descriptionOnChange } placeholder="Consider yourself a salesperson for this trip"></textarea>
         </div>
         <div className="field">
           <label>OK, give this trip a name</label>
-          <input placeholder="Last chance to make this trip sound cool" type="text" />
+          <input onChange={ this.nameOnChange } placeholder="Last chance to make this trip sound cool" type="text" />
         </div>
         <div className="field">
           <label>Where to</label>
@@ -84,7 +94,11 @@ var TripCreator = React.createClass({
         </div>
         <div className="field">
           <label>When</label>
-          <input onChange={ this.travelDatesOnChange } value={ this.state.travelDates } placeholder="Enter travel dates"/>
+          <input onChange={ this.travelDatesOnChange } value={ this.state.travelDates } placeholder="Enter a simple when"/>
+        </div>
+        <div className="field">
+          <label>Who (comma separated email addresses)</label>
+          <input onChange={ this.inviteesOnChange } value={ this.state.invitees } placeholder="Tell the developer to make this easier to enter"/>
         </div>
         <div className="ui error message">
           <div className="header">{this.state.formError}</div>

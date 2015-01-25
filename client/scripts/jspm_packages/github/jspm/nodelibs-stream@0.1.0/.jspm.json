@@ -1,0 +1,7 @@
+{
+  "registry": "npm",
+  "format": "cjs",
+  "dependencies": {
+    "stream-browserify": "stream-browserify@^1.0.0"
+  }
+}

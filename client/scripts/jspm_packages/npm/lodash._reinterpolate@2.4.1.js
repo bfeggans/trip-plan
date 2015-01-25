@@ -1,0 +1,1 @@
+module.exports = require("npm:lodash._reinterpolate@2.4.1/index");

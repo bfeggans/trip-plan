@@ -1,0 +1,7 @@
+{
+  "registry": "npm",
+  "format": "cjs",
+  "dependencies": {
+    "string_decoder": "string_decoder@^0.10.31"
+  }
+}

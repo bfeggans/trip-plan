@@ -1,0 +1,7 @@
+{
+  "registry": "npm",
+  "format": "cjs",
+  "dependencies": {
+    "constants-browserify": "constants-browserify@0.0.1"
+  }
+}

@@ -42,7 +42,7 @@ var TripMain = React.createClass({displayName: "TripMain",
         ), 
         React.createElement(TripList, {trips:  this.state.trips}), 
 
-        React.createElement(Link, {to: "newtrip", className: "ui inverted full-width pink button vertically-spaced centered"}, "Plan that trip")
+        React.createElement(Link, {to: "newtrip", className: "ui inverted full-width pink button vertically-spaced centered"}, "Plan a trip")
 
       )
     )
