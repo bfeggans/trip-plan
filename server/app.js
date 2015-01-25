@@ -8,6 +8,8 @@ app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static('./client'));
 
+var BASE_URL = "http://trip-plan.herokuapp.com/#/trip/";
+
 app.get('/', function(req, res) {
     res.render('./client/index.html');
 });
@@ -56,7 +58,7 @@ app.post('/api/trip', function(req, res) {
         },
         {
           "name": "TRIP_URL",
-          "content": "localhost:5000/" + req.body.id
+          "content": BASE_URL + req.body.id
         }
       ]
     };

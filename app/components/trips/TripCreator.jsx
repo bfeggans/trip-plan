@@ -41,7 +41,8 @@ var TripCreator = React.createClass({
         name: this.state.name,
         description: this.state.description,
         destination: this.state.destination,
-        travelDates: this.state.travelDates
+        travelDates: this.state.travelDates,
+        invitees: this.state.invitees
       }, function (trip) {
         this.transitionTo('trip', { id: trip.id });
       }.bind(this));

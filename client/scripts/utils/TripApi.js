@@ -20,7 +20,7 @@ export default class TripApi {
       description: attrs.description,
       destination: attrs.destination,
       travelDates: attrs.travelDates,
-      invitees: ['me@iamjsmith.com'],
+      invitees: attrs.invitees,
       id: id
     }
     $.ajax({

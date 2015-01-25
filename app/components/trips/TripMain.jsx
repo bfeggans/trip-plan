@@ -42,7 +42,7 @@ var TripMain = React.createClass({
         </div>
         <TripList trips={ this.state.trips } />
 
-        <Link to="newtrip" className="ui inverted full-width pink button vertically-spaced centered">Plan that trip</Link>
+        <Link to="newtrip" className="ui inverted full-width pink button vertically-spaced centered">Plan a trip</Link>
 
       </div>
     )
