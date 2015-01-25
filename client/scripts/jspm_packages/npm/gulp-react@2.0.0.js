@@ -1,0 +1,1 @@
+module.exports = require("npm:gulp-react@2.0.0/index");

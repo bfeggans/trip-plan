@@ -1,0 +1,1 @@
+module.exports = require("npm:diffie-hellman@2.2.3/index");

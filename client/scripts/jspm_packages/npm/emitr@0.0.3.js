@@ -1,0 +1,1 @@
+module.exports = require("npm:emitr@0.0.3/lib/index");

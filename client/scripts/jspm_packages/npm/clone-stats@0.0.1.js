@@ -1,0 +1,1 @@
+module.exports = require("npm:clone-stats@0.0.1/index");

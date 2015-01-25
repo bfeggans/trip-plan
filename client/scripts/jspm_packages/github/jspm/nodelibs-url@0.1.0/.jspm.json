@@ -1,0 +1,7 @@
+{
+  "registry": "npm",
+  "format": "cjs",
+  "dependencies": {
+    "url": "url@^0.10.1"
+  }
+}
