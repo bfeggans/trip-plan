@@ -4,8 +4,7 @@
   "description": "Plan your trips like a boss",
   "main": "server/app.js",
   "scripts": {
-    "start": "node server/app.js",
-    "postinstall": "node node_modules/.bin/gulp default"
+    "start": "node server/app.js"
   },
   "dependencies": {
     "body-parser": "^1.10.2",
