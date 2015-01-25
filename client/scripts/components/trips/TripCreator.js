@@ -11,7 +11,9 @@ var TripCreator = React.createClass({displayName: "TripCreator",
   getInitialState: function() {
     return {
       destination: "",
-      travelDates: ""
+      travelDates: "",
+      name: "",
+      description: ""
     };
   },
   destinationOnChange: function(e){
@@ -20,22 +22,29 @@ var TripCreator = React.createClass({displayName: "TripCreator",
   travelDatesOnChange: function(e){
     this.setState({travelDates: e.target.value});
   },
+  descriptionOnChange: function(e){
+    this.setState({description: e.target.value});
+  },
+  nameOnChange: function(e){
+    this.setState({name: e.target.value});
+  },
+  inviteesOnChange: function(e){
+    var invitees = e.target.value.split(',');
+    this.setState({invitees: invitees});
+  },
   createTrip: function(e) {
     e.preventDefault();
 
     this.validateForm().then(function(result) {
 
       TripActions.createTrip({
+        name: this.state.name,
+        description: this.state.description,
         destination: this.state.destination,
         travelDates: this.state.travelDates
       }, function (trip) {
-
-        console.log(trip);
-
         this.transitionTo('trip', { id: trip.id });
       }.bind(this));
-
-      // TODO need to jump to trip details after creation
 
       this.resetForm();
 
@@ -72,11 +81,11 @@ var TripCreator = React.createClass({displayName: "TripCreator",
       React.createElement("form", {className: "ui form", onSubmit:  this.createTrip}, 
         React.createElement("div", {className: "field"}, 
           React.createElement("label", null, "Describe the trip"), 
-          React.createElement("textarea", {placeholder: "Consider yourself a salesperson for this trip"})
+          React.createElement("textarea", {onChange:  this.descriptionOnChange, placeholder: "Consider yourself a salesperson for this trip"})
         ), 
         React.createElement("div", {className: "field"}, 
           React.createElement("label", null, "OK, give this trip a name"), 
-          React.createElement("input", {placeholder: "Last chance to make this trip sound cool", type: "text"})
+          React.createElement("input", {onChange:  this.nameOnChange, placeholder: "Last chance to make this trip sound cool", type: "text"})
         ), 
         React.createElement("div", {className: "field"}, 
           React.createElement("label", null, "Where to"), 
@@ -84,7 +93,11 @@ var TripCreator = React.createClass({displayName: "TripCreator",
         ), 
         React.createElement("div", {className: "field"}, 
           React.createElement("label", null, "When"), 
-          React.createElement("input", {onChange:  this.travelDatesOnChange, value:  this.state.travelDates, placeholder: "Enter travel dates"})
+          React.createElement("input", {onChange:  this.travelDatesOnChange, value:  this.state.travelDates, placeholder: "Enter a simple when"})
+        ), 
+        React.createElement("div", {className: "field"}, 
+          React.createElement("label", null, "Who (comma separated email addresses)"), 
+          React.createElement("input", {onChange:  this.inviteesOnChange, value:  this.state.invitees, placeholder: "Tell the developer to make this easier to enter"})
         ), 
         React.createElement("div", {className: "ui error message"}, 
           React.createElement("div", {className: "header"}, this.state.formError)

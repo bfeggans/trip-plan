@@ -15,13 +15,23 @@ export default class TripApi {
 
   createTrip(attrs, cb) {
     let id = this.firebaseRef.push().key();
-
     var trip = {
+      name: attrs.name,
+      description: attrs.description,
       destination: attrs.destination,
       travelDates: attrs.travelDates,
+      invitees: ['me@iamjsmith.com'],
       id: id
     }
-
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(trip),
+      contentType: 'application/json',
+      url: '/api/trip',
+      success: function(result) {
+        console.log(result);
+      }
+    });
     this.firebaseRef.push(trip);
     cb(trip);
   }

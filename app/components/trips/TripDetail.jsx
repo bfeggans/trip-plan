@@ -3,6 +3,8 @@ import Router from 'react-router';
 import TripActions from '../../actions/TripActions';
 import TripStore from '../../stores/TripStore';
 
+import Feed from '../feed/Feed';
+
 function getTripState(id) {
   return {
     tripDetails: TripStore.getTripDetails(id)
@@ -34,28 +36,60 @@ var Trip = React.createClass({
 
   render: function() {
 
-    var trip = (this.state.tripDetails) ? this.state.tripDetails : {destination: "", travelDates: ""};
+    var trip = this.state.tripDetails || {};
 
-    return (
-      <div className="ui card">
-        <div className="image">
-          <img src="http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg" />
-        </div>
-        <div className="content">
-          <a className="header">{ trip.destination }</a>
-          <div className="meta">
-            <span className="date">{ trip.travelDates }</span>
-          </div>
-          <div className="description">
-            Best Trip EVER
-          </div>
-        </div>
+    if (trip.invitees && trip.invitees.length) {
+      var inviteesList = (
         <div className="extra content">
           <a>
             <i className="user icon"></i>
-            22 Friends
+            {trip.invitees && trip.invitees.length} Friends
           </a>
+          <div className="ui list">
+            {trip.invitees.map(function(invitee) {
+              return (
+                <div className="item">
+                  <img className="ui avatar image" src="http://semantic-ui.com/images/avatar/small/daniel.jpg" />
+                  <div className="content">
+                    <a className="header">{invitee}</a>
+                    <div className="description">"I'm ready to get that money on this trip"</div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
+      )
+    }
+
+    return (
+      <div>
+        <div className="ui ignored positive icon message">
+          This trip has momentum. Contribute. Keep it alive!
+        </div>
+        {/* this ui card could probably be a separate reusable element */}
+        <div className="ui card">
+          <div className="content">
+            <a className="header">{ trip.destination }</a>
+            <div className="meta">
+              <span className="date">{ trip.travelDates }</span>
+            </div>
+            <div className="description">
+              { trip.description }
+            </div>
+          </div>
+          <div className="image">
+            <img src="http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg" />
+            <div className="confirm-form">
+              <h1>Are you coming?</h1>
+              <div className="ui massive inverted teal button">Hell yeah!</div>
+            </div>
+          </div>
+          {inviteesList}
+        </div>
+
+        <Feed />
+
       </div>
     )
   },

@@ -3,6 +3,8 @@ import Router from 'react-router';
 import TripActions from '../../actions/TripActions';
 import TripStore from '../../stores/TripStore';
 
+import Feed from '../feed/Feed';
+
 function getTripState(id) {
   return {
     tripDetails: TripStore.getTripDetails(id)
@@ -34,28 +36,60 @@ var Trip = React.createClass({displayName: "Trip",
 
   render: function() {
 
-    var trip = (this.state.tripDetails) ? this.state.tripDetails : {destination: "", travelDates: ""};
+    var trip = this.state.tripDetails || {};
 
-    return (
-      React.createElement("div", {className: "ui card"}, 
-        React.createElement("div", {className: "image"}, 
-          React.createElement("img", {src: "http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg"})
-        ), 
-        React.createElement("div", {className: "content"}, 
-          React.createElement("a", {className: "header"},  trip.destination), 
-          React.createElement("div", {className: "meta"}, 
-            React.createElement("span", {className: "date"},  trip.travelDates)
-          ), 
-          React.createElement("div", {className: "description"}, 
-            "Best Trip EVER"
-          )
-        ), 
+    if (trip.invitees && trip.invitees.length) {
+      var inviteesList = (
         React.createElement("div", {className: "extra content"}, 
           React.createElement("a", null, 
             React.createElement("i", {className: "user icon"}), 
-            "22 Friends"
+            trip.invitees && trip.invitees.length, " Friends"
+          ), 
+          React.createElement("div", {className: "ui list"}, 
+            trip.invitees.map(function(invitee) {
+              return (
+                React.createElement("div", {className: "item"}, 
+                  React.createElement("img", {className: "ui avatar image", src: "http://semantic-ui.com/images/avatar/small/daniel.jpg"}), 
+                  React.createElement("div", {className: "content"}, 
+                    React.createElement("a", {className: "header"}, invitee), 
+                    React.createElement("div", {className: "description"}, "\"I'm ready to get that money on this trip\"")
+                  )
+                )
+              )
+            })
           )
         )
+      )
+    }
+
+    return (
+      React.createElement("div", null, 
+        React.createElement("div", {className: "ui ignored positive icon message"}, 
+          "This trip has momentum. Contribute. Keep it alive!"
+        ), 
+        /* this ui card could probably be a separate reusable element */
+        React.createElement("div", {className: "ui card"}, 
+          React.createElement("div", {className: "content"}, 
+            React.createElement("a", {className: "header"},  trip.destination), 
+            React.createElement("div", {className: "meta"}, 
+              React.createElement("span", {className: "date"},  trip.travelDates)
+            ), 
+            React.createElement("div", {className: "description"}, 
+               trip.description
+            )
+          ), 
+          React.createElement("div", {className: "image"}, 
+            React.createElement("img", {src: "http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg"}), 
+            React.createElement("div", {className: "confirm-form"}, 
+              React.createElement("h1", null, "Are you coming?"), 
+              React.createElement("div", {className: "ui massive inverted teal button"}, "Hell yeah!")
+            )
+          ), 
+          inviteesList
+        ), 
+
+        React.createElement(Feed, null)
+
       )
     )
   },
