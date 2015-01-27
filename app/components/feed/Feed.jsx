@@ -1,68 +1,46 @@
 import React from 'react';
+import FeedActions from '../../actions/FeedActions';
+import FeedStore from '../../stores/FeedStore';
+import FeedCard from './FeedCard';
+
+var getMessages = function(){
+  return {
+    messages: FeedStore.getFeeds()
+  }
+}
 
 var Feed = React.createClass({
+  getInitialState:function(){
+    return getMessages();
+  },
+  createMessage:function(){
+    FeedActions.createMessage({
+      author: "blake",
+      messageText: this.state.messageText,
+      id: (Math.floor(Math.random() * 100))
+    });
+
+    this.setState({messageText: ""})
+  },
+  removeMessage:function(message){
+    FeedActions.removeMessage(message.id);
+    console.dir(message);
+
+    this._onChange();
+  },
+  messageOnChange:function(e){
+    this.setState({messageText: e.target.value});
+  },
+  _onChange:function(){
+    this.setState(getMessages());
+  },
   render: function() {
     return (
-      <div className="ui feed">
-        <div className="event">
-          <div className="label">
-            <img src="http://semantic-ui.com/images/avatar/small/joe.jpg" />
-          </div>
-          <div className="content">
-            <div className="summary">
-              <a>Joe Henderson</a> said
-              <div className="date">
-                3 days ago
-              </div>
-            </div>
-            <div className="extra text">
-              Hopefully this is just as much fun as last time.
-            </div>
-            <div className="meta">
-              <a className="like">
-                <i className="like icon"></i> 5 Likes
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="event">
-          <div className="label">
-            <img src="http://semantic-ui.com/images/avatar/small/daniel.jpg" />
-          </div>
-          <div className="content">
-            <div className="summary">
-              <a>Jason Smith</a> said
-              <div className="date">
-                1 Hour Ago
-              </div>
-            </div>
-            <div className="extra text">
-              Joe do you even remember last time?
-            </div>
-            <div className="meta">
-              <a className="like">
-                <i className="like icon"></i> 5 Likes
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="content event">
-          <div className="label">
-            <img src="http://semantic-ui.com/images/avatar/small/daniel.jpg" />
-          </div>
-          <div className="content">
-            <div className="summary">
-              <a className="user">
-                Jason Smith
-              </a> confirmed they are coming!
-              <div className="date">
-                1 Hour Ago
-              </div>
-            </div>
-            <div className="extra text">
-              "I'm ready to get that money on this trip"
-            </div>
-          </div>
+      <div>
+        <FeedCard messages={ this.state.messages } removeMessage={ this.removeMessage }/>
+        <div className="ui action left icon input">
+          <input type="text" onChange={ this.messageOnChange } value={ this.state.messageText } placeholder="Comment here..." />
+          <div className="ui teal button" onClick={ this.createMessage }>Add</div>
         </div>
       </div>
     )
