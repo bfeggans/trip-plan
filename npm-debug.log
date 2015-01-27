@@ -1,0 +1,69 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 warn package.json trip-plan@0.0.1 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/Users/blakefeggans/Documents/web/trip-plan',
+6 verbose install   [ 'express', 'gulp-react' ] ]
+7 info preinstall trip-plan@0.0.1
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping express@~4.9.x /Users/blakefeggans/Documents/web/trip-plan
+10 verbose already installed skipping gulp-react@^2.0.0 /Users/blakefeggans/Documents/web/trip-plan
+11 silly resolved []
+12 info build /Users/blakefeggans/Documents/web/trip-plan
+13 verbose linkStuff [ false, false, false, '/Users/blakefeggans/Documents/web' ]
+14 info linkStuff trip-plan@0.0.1
+15 verbose linkBins trip-plan@0.0.1
+16 verbose linkMans trip-plan@0.0.1
+17 verbose rebuildBundles trip-plan@0.0.1
+18 verbose rebuildBundles [ '.bin',
+18 verbose rebuildBundles   'express',
+18 verbose rebuildBundles   'gulp',
+18 verbose rebuildBundles   'gulp-concat',
+18 verbose rebuildBundles   'gulp-livereload',
+18 verbose rebuildBundles   'gulp-react' ]
+19 verbose rebuild bundle /Users/blakefeggans/Documents/web/trip-plan/node_modules/gulp
+20 info build /Users/blakefeggans/Documents/web/trip-plan/node_modules/gulp
+21 info preinstall gulp@3.8.10
+22 verbose linkStuff [ false,
+22 verbose linkStuff   false,
+22 verbose linkStuff   false,
+22 verbose linkStuff   '/Users/blakefeggans/Documents/web/trip-plan/node_modules' ]
+23 info linkStuff gulp@3.8.10
+24 verbose linkBins gulp@3.8.10
+25 verbose link bins [ { gulp: './bin/gulp.js' },
+25 verbose link bins   '/Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin',
+25 verbose link bins   false ]
+26 verbose linkMans gulp@3.8.10
+27 verbose rebuildBundles gulp@3.8.10
+28 verbose rebuildBundles [ '.bin',
+28 verbose rebuildBundles   'archy',
+28 verbose rebuildBundles   'chalk',
+28 verbose rebuildBundles   'deprecated',
+28 verbose rebuildBundles   'gulp-util',
+28 verbose rebuildBundles   'interpret',
+28 verbose rebuildBundles   'liftoff',
+28 verbose rebuildBundles   'minimist',
+28 verbose rebuildBundles   'orchestrator',
+28 verbose rebuildBundles   'pretty-hrtime',
+28 verbose rebuildBundles   'semver',
+28 verbose rebuildBundles   'tildify',
+28 verbose rebuildBundles   'v8flags',
+28 verbose rebuildBundles   'vinyl-fs' ]
+29 error Error: EACCES, unlink '/Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin/gulp'
+29 error  { [Error: EACCES, unlink '/Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin/gulp']
+29 error   errno: 3,
+29 error   code: 'EACCES',
+29 error   path: '/Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin/gulp' }
+30 error Please try running this command again as root/Administrator.
+31 error System Darwin 14.0.0
+32 error command "node" "/usr/local/bin/npm" "install"
+33 error cwd /Users/blakefeggans/Documents/web/trip-plan
+34 error node -v v0.10.32
+35 error npm -v 1.4.28
+36 error path /Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin/gulp
+37 error code EACCES
+38 error errno 3
+39 error stack Error: EACCES, unlink '/Users/blakefeggans/Documents/web/trip-plan/node_modules/.bin/gulp'
+40 verbose exit [ 3, true ]

@@ -1,0 +1,1 @@
+module.exports = require("npm:esprima-fb@8001.2001.0-dev-harmony-fb/esprima");

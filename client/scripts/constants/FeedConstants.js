@@ -1,0 +1,7 @@
+var FeedConstants = {
+	CREATE_MESSAGE: 'CREATE_MESSAGE',
+	REMOVE_MESSAGE: 'REMOVE_MESSAGE',
+	VIEW_MESSAGES: 'VIEW_MESSAGES'
+};
+
+export default FeedConstants;

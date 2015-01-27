@@ -1,0 +1,1 @@
+module.exports = require("npm:browserify-sign@2.7.5/index");

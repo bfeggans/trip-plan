@@ -1,0 +1,7 @@
+{
+  "registry": "npm",
+  "format": "cjs",
+  "dependencies": {
+    "vm-browserify": "vm-browserify@0.0.4"
+  }
+}

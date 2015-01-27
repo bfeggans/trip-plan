@@ -1,0 +1,1 @@
+module.exports = require("npm:browserify-aes@0.8.1/index");
