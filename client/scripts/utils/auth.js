@@ -19,6 +19,7 @@ class Auth  {
         that.onChange(false);
       } else {
         localStorage.token = authData.token;
+        localStorage.name = authData.twitter.displayName;
         if(cb) cb(true);
         that.onChange(true);
       }

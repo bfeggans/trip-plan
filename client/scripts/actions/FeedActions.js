@@ -1,26 +1,46 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import _ from 'underscore';
 import FeedConstants from '../constants/FeedConstants';
+import FeedApi from '../utils/FeedApi';
+import _ from 'underscore';
 
-var FeedActions = {
-	createMessage:function(message){
-		console.log(message);
-		AppDispatcher.dispatch({
-			actionType: FeedConstants.CREATE_MESSAGE,
-			message: message
-		})
-	},
-	viewMessages:function(){
-		AppDispatcher.dispatch({
-			actionType: FeedConstants.VIEW_MESSAGES
-		})
-	},
-	removeMessage:function(index){
+
+class FeedActions {
+
+	constructor(){
+		this.api = new FeedApi();
+	}
+
+	createMessage(attrs){
+		console.log(attrs);
+		this.api.newMessage(attrs, function(message){
+			AppDispatcher.dispatch({
+				actionType: FeedConstants.CREATE_MESSAGE,
+				message: message
+			});
+		});
+	}
+
+	viewMessages(){
+		this.api.getMessages(function(response){
+			var messageData = _.map(response, function(val, key){
+				return val;
+			});
+			AppDispatcher.dispatch({
+				actionType: FeedConstants.VIEW_MESSAGES,
+				data: messageData
+			});
+		});
+	}
+
+	removeMessage(arr, attr, value){
 		AppDispatcher.dispatch({
 			actionType: FeedConstants.REMOVE_MESSAGE,
-			index: index
+			arr: arr,
+			attr: attr,
+			value: value
 		})
 	}
+
 }
 
-export default FeedActions;
+export default new FeedActions();

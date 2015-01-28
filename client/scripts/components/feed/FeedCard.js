@@ -2,10 +2,13 @@ import React from 'react';
 import FeedActions from '../../actions/FeedActions';
 import FeedStore from '../../stores/FeedStore';
 
-var FeedCard = React.createClass({displayName: "FeedCard",
+var Card = React.createClass({displayName: "Card",
+	callParentRemove:function(e){
+    this.props.handleRemoveMessage(this);
+  },
 	createCard: function(message, index){
 			return (
-				React.createElement("div", {key: index, className: "event"}, 
+				React.createElement("div", {key:  message.id, className: "event"}, 
 	        React.createElement("div", {className: "label"}, 
 	          React.createElement("img", {src: "http://semantic-ui.com/images/avatar/small/joe.jpg"})
 	        ), 
@@ -23,7 +26,7 @@ var FeedCard = React.createClass({displayName: "FeedCard",
 	            React.createElement("a", {className: "like"}, 
 	              React.createElement("i", {className: "like icon"}), " 5 Likes"
 	            ), 
-	            React.createElement("a", {onClick:  this.props.removeMessage.bind(this, message), className: "delete"}, 
+	            React.createElement("a", {onClick:  this.callParentRemove, className: "delete"}, 
 	              React.createElement("i", {className: "delete icon"}), " Delete Comment"
 	            )
 	          )
@@ -34,7 +37,7 @@ var FeedCard = React.createClass({displayName: "FeedCard",
 	render: function(){
 		return (
 			React.createElement("div", {className: "ui feed"}, 
-				 this.props.messages.map(this.createCard) 
+				 this.createCard(this.props.message) 
 			)
 			)
 	}
