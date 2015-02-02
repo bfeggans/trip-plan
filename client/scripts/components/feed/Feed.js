@@ -18,16 +18,17 @@ var Feed = React.createClass({displayName: "Feed",
     FeedStore.addChangeListener(this._onChange, this);
 
     // Grab initial messages 
-    FeedActions.viewMessages();
+    FeedActions.viewMessages(this.props.tripId);
   },
   componentWillUnmount:function(){
     FeedStore.removeChangeListener(this._onChange, this);
   },
   createMessage:function(){
     FeedActions.createMessage({
-      author: localStorage.name,
+      author: localStorage.twitter.displayName,
       messageText: this.state.messageText,
-      id: (Math.floor(Math.random() * 1000))
+      id: (Math.floor(Math.random() * 1000)),
+      tripId: this.props.tripId
     });
 
     this.setState({messageText: ""})
@@ -39,11 +40,12 @@ var Feed = React.createClass({displayName: "Feed",
     this.setState({messageText: e.target.value});
   },
   _onChange:function(){
-    this.setState(getMessages());
+    this.setState(FeedStore.getFeeds());
   },
   render: function() {
 
-    var messages = this.state.messages || [];
+    var messages = this.state.messages;
+    console.log(messages);
 
     return (
       React.createElement("div", null, 

@@ -9,17 +9,16 @@ export default class FeedApi {
 
   getMessages(cb) {
     $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
-      console.log('hello from api');
       cb(response);
     });
   }
 
   newMessage(attrs, cb) {
-    let id = this.firebaseRef.push().key();
     var message = {
       author: attrs.author,
       messageText: attrs.messageText,
-      id: id
+      id: attrs.id,
+      tripId: attrs.tripId
     }
     // $.ajax({
     //   type: 'POST',

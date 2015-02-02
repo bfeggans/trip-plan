@@ -20,14 +20,15 @@ class FeedActions {
 		});
 	}
 
-	viewMessages(){
+	viewMessages(tripId){
 		this.api.getMessages(function(response){
 			var messageData = _.map(response, function(val, key){
 				return val;
 			});
 			AppDispatcher.dispatch({
 				actionType: FeedConstants.VIEW_MESSAGES,
-				data: messageData
+				data: messageData,
+				tripId: tripId
 			});
 		});
 	}

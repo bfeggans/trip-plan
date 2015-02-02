@@ -7,7 +7,8 @@ import Feed from '../feed/Feed';
 
 function getTripState(id) {
   return {
-    tripDetails: TripStore.getTripDetails(id)
+    tripDetails: TripStore.getTripDetails(id),
+    tripId: id
   }
 }
 
@@ -88,7 +89,7 @@ var Trip = React.createClass({
           {inviteesList}
         </div>
 
-        <Feed />
+        <Feed tripId={ this.state.tripId }/>
 
       </div>
     )

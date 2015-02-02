@@ -6,9 +6,17 @@ import $ from 'jquery';
 
 // var _messages = [{messageText:"hello world", author:"blake", id:1},{messageText:"sup earth", author:"meghan", id:2}];
 var _messages = [];
+var _tripMessages = [];
 
-var _viewMessages = function(data){
+var _viewMessages = function(data, id){
 	_messages = data;
+	console.log(_messages);
+	_tripMessages = _.where(data, {tripId: id});
+	console.log(_tripMessages);
+}
+
+var _getTripMessages = (tripId) => {
+	_tripMessages = _.where(_messages, {tripId:tripId});
 }
 
 var _createMessage = function(data){
@@ -32,7 +40,7 @@ var _removeMessage = function(arr, attr, value){
 
 class FeedStore extends Store {
 	getFeeds(){
-		return _messages;
+		return _tripMessages;
 	}
 };
 
@@ -47,7 +55,8 @@ AppDispatcher.register(function(payload){
 			_createMessage(payload.message);
 			break;
 		case FeedConstants.VIEW_MESSAGES:
-			_viewMessages(payload.data);
+			_viewMessages(payload.data, payload.tripId);
+			// _getTripMessages(payload.tripId);
 			break;
 		case FeedConstants.REMOVE_MESSAGE:
 			// console.log(payload);

@@ -27,14 +27,15 @@ var TripMain = React.createClass({
     TripStore.removeChangeListener(this._onChange, this);
   },
 
-  /**
-   * Event handler for 'change' events coming from the TripStore
-   */
+  // Event handler for 'change' events coming from the TripStore
+   
   _onChange: function() {
     this.setState(getTripState());
   },
 
   render: function() {
+    console.log(this.state.trips);
+
     return (
       <div>
         <div className="ui horizontal divider">

@@ -19,7 +19,8 @@ class Auth  {
         that.onChange(false);
       } else {
         localStorage.token = authData.token;
-        localStorage.name = authData.twitter.displayName;
+        console.log(authData.twitter);
+        localStorage.twitter = authData.twitter;
         if(cb) cb(true);
         that.onChange(true);
       }
