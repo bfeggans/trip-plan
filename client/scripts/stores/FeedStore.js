@@ -10,9 +10,9 @@ var _tripMessages = [];
 
 var _viewMessages = function(data, id){
 	_messages = data;
-	console.log(_messages);
+	//console.log(_messages);
 	_tripMessages = _.where(data, {tripId: id});
-	console.log(_tripMessages);
+	//console.log(_tripMessages);
 }
 
 var _getTripMessages = (tripId) => {
@@ -25,13 +25,13 @@ var _createMessage = function(data){
 
 var _removeMessage = function(arr, attr, value){
 	console.log('NOT REMOVING FROM FIREBASE - TODO');
-	
+
 	var i = arr.length;
 
 	while (i--){
 		if (
-			arr[i] 
-			&& arr[i].hasOwnProperty(attr) 
+			arr[i]
+			&& arr[i].hasOwnProperty(attr)
 			&& (arguments.length > 2 && arr[i][attr] == value)){
 				arr.splice(i, 1);
 		}

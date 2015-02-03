@@ -7,8 +7,7 @@ import Feed from '../feed/Feed';
 
 function getTripState(id) {
   return {
-    tripDetails: TripStore.getTripDetails(id),
-    tripId: id
+    tripDetails: TripStore.getTripDetails(id)
   }
 }
 
@@ -38,6 +37,8 @@ var Trip = React.createClass({
   render: function() {
 
     var trip = this.state.tripDetails || {};
+
+    console.log('rendering', trip)
 
     if (trip.invitees && trip.invitees.length) {
       var inviteesList = (
@@ -89,7 +90,7 @@ var Trip = React.createClass({
           {inviteesList}
         </div>
 
-        <Feed tripId={ this.state.tripId }/>
+        <Feed tripId={ trip.id } />
 
       </div>
     )

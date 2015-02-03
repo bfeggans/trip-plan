@@ -1,4 +1,5 @@
 import React from 'react';
+import Router from 'react-router';
 import FeedActions from '../../actions/FeedActions';
 import FeedStore from '../../stores/FeedStore';
 import Card from '../common/Card';
@@ -10,18 +11,22 @@ var getMessages = function(){
 }
 
 var Feed = React.createClass({
+
+  mixins: [ Router.Navigation, Router.State ],
+
   getInitialState:function(){
     return getMessages();
   },
   componentDidMount:function(){
     // Listen for changes on the Feed Store
     FeedStore.addChangeListener(this._onChange, this);
-
-    // Grab initial messages 
-    FeedActions.viewMessages(this.props.tripId);
   },
   componentWillUnmount:function(){
     FeedStore.removeChangeListener(this._onChange, this);
+  },
+  componentWillUpdate: function () {
+    // Grab initial messages
+    FeedActions.viewMessages(this.props.tripId);
   },
   createMessage:function(){
     FeedActions.createMessage({
@@ -40,13 +45,10 @@ var Feed = React.createClass({
     this.setState({messageText: e.target.value});
   },
   _onChange:function(){
-    this.setState(FeedStore.getFeeds());
+    this.setState(getMessages());
   },
   render: function() {
-
     var messages = this.state.messages;
-    console.log(messages);
-
     return (
       <div>
         { messages.map(function(message) {
