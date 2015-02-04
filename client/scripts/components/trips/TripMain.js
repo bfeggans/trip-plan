@@ -28,7 +28,7 @@ var TripMain = React.createClass({displayName: "TripMain",
   },
 
   // Event handler for 'change' events coming from the TripStore
-   
+
   _onChange: function() {
     this.setState(getTripState());
   },
