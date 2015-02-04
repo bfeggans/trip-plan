@@ -3,10 +3,11 @@ var src = './src';
 
 module.exports = {
   browserSync: {
-    server: {
+    /*server: {
       // Serve up our build folder
       baseDir: dest
-    }
+    }*/
+    proxy: "localhost:5000"
   },
   /*sass: {
     src: dest + "/styles/*.{sass,scss}",
