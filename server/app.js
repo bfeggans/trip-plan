@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mandrill = require('mandrill-api/mandrill');
+var firebase = require('firebase');
 
 app.use(bodyParser.json());
 
@@ -15,10 +16,6 @@ app.get('/', function(req, res) {
 });
 
 app.post('/api/trip', function(req, res) {
-
-  // console.log('params: ' + JSON.stringify(req.params));
-  // console.log('body: ' + JSON.stringify(req.body));
-  // console.log('query: ' + JSON.stringify(req.query));
 
   function sendTemplateMessage(template, message) {
     var mandrill_client = new mandrill.Mandrill('l6WnyZ3DxPxKd5pemFio7Q');
@@ -36,6 +33,10 @@ app.post('/api/trip', function(req, res) {
       res.json(e);
     });
   }
+
+  var inviteesRef = new firebase("https://trip-plan.firebaseio.com/invitees");
+
+  inviteesRef.set(req.body.invitees);
 
   req.body.invitees.map(function(toEmail) {
     var message = {

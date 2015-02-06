@@ -1,12 +1,17 @@
-var gulp = require('gulp');
-var react = require('gulp-react');
+/*
+  gulpfile.js
+  ===========
+  Rather than manage one giant configuration file responsible
+  for creating multiple tasks, each task has been broken out into
+  its own file in gulp/tasks. Any files in that directory get
+  automatically required below.
 
-gulp.task('default', function () {
-  return gulp.src('./app/components/**/*.jsx')
-    .pipe(react())
-    .pipe(gulp.dest('./client/scripts/components'));
-});
+  To add a new task, simply add a new task file that directory.
+  gulp/tasks/default.js specifies the default set of tasks to run
+  when you run `gulp`.
+*/
 
-gulp.task('watch', function(){
-	gulp.watch('./app/components/**/*.jsx',['default']);
-});
+var requireDir = require('require-dir');
+
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./gulp/tasks', { recurse: true });
