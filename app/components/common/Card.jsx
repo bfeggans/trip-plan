@@ -6,25 +6,42 @@ var Card = React.createClass({
 	callParentRemove:function(e){
     this.props.handleRemoveMessage(this);
   },
+  callParentLikes:function(e){
+  	this.props.handleLikes(this);
+  },
+  handleDatePosted:function(date){
+  	var now = Date.now();
+  	var dateDifference = (now - date);
+
+  	if ((now-date)/1000 < 60){
+  		return (Math.floor((dateDifference)/1000) + ' seconds ago');
+  	} else if ((dateDifference)/1000/60 < 60){
+  		return (Math.floor((dateDifference)/1000/60) + ' minutes ago')
+  	} else if ((dateDifference)/1000/60/60 < 24){
+  		return (Math.floor((dateDifference)/1000/60/60) + ' hours ago')
+  	} else {
+  		return (Math.floor((dateDifference)/1000/60/60/24) + ' days ago') 
+  	}
+  },
 	createCard: function(message, index){
 			return (
 				<div key={ message.id } className="event">
 	        <div className="label">
-	          <img src="http://semantic-ui.com/images/avatar/small/joe.jpg" />
+	          <img src={ this.props.profPic } />
 	        </div>
 	        <div className="content">
 	          <div className="summary">
 	            <a>{ message.author }</a> said
 	            <div className="date">
-	              3 days ago
+	              { this.handleDatePosted(message.date) }
 	            </div>
 	          </div>
 	          <div className="extra text">
 	            { message.messageText }
 	          </div>
 	          <div className="meta">
-	            <a className="like">
-	              <i className="like icon"></i> 5 Likes
+	            <a onClick={ this.callParentLikes } className="like">
+	              <i className="chevron up icon"></i> { message.likes.length - 1 } Upvotes
 	            </a>
 	            <a onClick={ this.callParentRemove } className="delete">
 	              <i className="delete icon"></i> Delete Comment

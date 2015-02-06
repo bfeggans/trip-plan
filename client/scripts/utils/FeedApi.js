@@ -17,8 +17,11 @@ export default class FeedApi {
     var message = {
       author: attrs.author,
       messageText: attrs.messageText,
+      tripId: attrs.tripId,
+      date: attrs.date,
       id: attrs.id,
-      tripId: attrs.tripId
+      //Firebase requires a falsy value to create the array
+      likes: ['']
     }
     // $.ajax({
     //   type: 'POST',
@@ -29,9 +32,57 @@ export default class FeedApi {
     //     console.log('Hi from FeedApi')
     //   }
     // });
-    this.firebaseRef.push(message);
+    this.firebaseRef.push(message, function(){
+      $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
+        cb(response);
+      })
+    });
     // this cb is used to call the dispatcher
-    cb(message);
+    // cb(message);
+  }
+
+  removeMessage(id, cb){
+    var url = 'https://trip-plan.firebaseio.com/messages/' + id + '.json';
+
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      success: function(){
+        //get the updated list of messages
+        $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
+          cb(response);
+        })
+      }
+    })
+  }
+
+  likesAdjuster(message, cb){
+    console.log(message.id);
+    var url = 'https://trip-plan.firebaseio.com/messages/' + message.id + '.json';
+    console.log(message);
+
+    $.ajax({
+      url: url,
+      type: 'PUT',
+      data: JSON.stringify(message),
+      success: function(){
+        $.get('http://trip-plan.firebaseio.com/messages.json', function(message) {
+          cb(message);
+        })
+      }
+    })
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,7 +20,7 @@ class Auth  {
       } else {
         localStorage.token = authData.token;
         console.log(authData.twitter);
-        localStorage.twitter = authData.twitter;
+        localStorage.twitter = JSON.stringify(authData.twitter);
         if(cb) cb(true);
         that.onChange(true);
       }

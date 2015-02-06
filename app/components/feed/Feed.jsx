@@ -4,18 +4,19 @@ import FeedActions from '../../actions/FeedActions';
 import FeedStore from '../../stores/FeedStore';
 import Card from '../common/Card';
 
-var getMessages = function(){
+var getMessages = function(id){
   return {
-    messages: FeedStore.getFeeds()
+    messages: FeedStore.getFeedsByTripId(id)
   }
 }
+var twitterObj = JSON.parse(localStorage['twitter'] || '{}');
 
 var Feed = React.createClass({
 
   mixins: [ Router.Navigation, Router.State ],
 
   getInitialState:function(){
-    return getMessages();
+    return getMessages(this.props.tripId);
   },
   componentDidMount:function(){
     // Listen for changes on the Feed Store
@@ -24,35 +25,40 @@ var Feed = React.createClass({
   componentWillUnmount:function(){
     FeedStore.removeChangeListener(this._onChange, this);
   },
-  componentWillUpdate: function () {
+  componentWillReceiveProps:function(nextProps) {
     // Grab initial messages
-    FeedActions.viewMessages(this.props.tripId);
+    FeedActions.viewMessages(nextProps.tripId);
   },
   createMessage:function(){
     FeedActions.createMessage({
-      author: localStorage.twitter.displayName,
+      author: twitterObj.displayName,
       messageText: this.state.messageText,
-      id: (Math.floor(Math.random() * 1000)),
-      tripId: this.props.tripId
+      // id: (Math.floor(Math.random() * 1000)),
+      id: null,
+      tripId: this.props.tripId,
+      date: Date.now(),
     });
 
     this.setState({messageText: ""})
   },
   handleRemoveMessage:function(childComponent){
-    FeedActions.removeMessage(this.state.messages, 'id', childComponent.props.message.id);
+    FeedActions.removeMessage(childComponent.props.message.id);
+  },
+  handleLikes:function(childComponent, username){
+    FeedActions.likeMachine(childComponent.props.message, twitterObj.username);
   },
   messageOnChange:function(e){
     this.setState({messageText: e.target.value});
   },
   _onChange:function(){
-    this.setState(getMessages());
+    this.setState(getMessages(this.props.tripId));
   },
   render: function() {
     var messages = this.state.messages;
     return (
       <div>
         { messages.map(function(message) {
-          return <Card message={ message } handleRemoveMessage={ this.handleRemoveMessage }/>
+          return <Card message={ message } profPic={ twitterObj.cachedUserProfile.profile_image_url } handleLikes={ this.handleLikes } handleRemoveMessage={ this.handleRemoveMessage }/>
         }, this) }
         <div className="ui action left icon input">
           <input type="text" onChange={ this.messageOnChange } value={ this.state.messageText } placeholder="Comment here..." />

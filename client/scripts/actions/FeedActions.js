@@ -11,11 +11,15 @@ class FeedActions {
 	}
 
 	createMessage(attrs){
-		console.log(attrs);
-		this.api.newMessage(attrs, function(message){
+		this.api.newMessage(attrs, function(response){
+			console.log(response);
+			var messageData = _.map(response, function(val, key){
+				val.id = key;
+				return val;
+			});
 			AppDispatcher.dispatch({
-				actionType: FeedConstants.CREATE_MESSAGE,
-				message: message
+				actionType: FeedConstants.VIEW_MESSAGES,
+				data: messageData
 			});
 		});
 	}
@@ -23,22 +27,45 @@ class FeedActions {
 	viewMessages(tripId){
 		this.api.getMessages(function(response){
 			var messageData = _.map(response, function(val, key){
-				return val;
+				if(val){
+					val.id = key;
+					return val;
+				}
 			});
 			AppDispatcher.dispatch({
 				actionType: FeedConstants.VIEW_MESSAGES,
-				data: messageData,
-				tripId: tripId
+				data: messageData
 			});
 		});
 	}
 
-	removeMessage(arr, attr, value){
-		AppDispatcher.dispatch({
-			actionType: FeedConstants.REMOVE_MESSAGE,
-			arr: arr,
-			attr: attr,
-			value: value
+	removeMessage(id){
+		this.api.removeMessage(id, function(response){
+			var messageData = _.map(response, function(val, key){
+				if(val){
+					val.id = key;
+					return val;
+				}
+			});
+			AppDispatcher.dispatch({
+				actionType: FeedConstants.VIEW_MESSAGES,
+				data: messageData
+			});
+		});
+	}
+
+	likeMachine(message, username){
+		if ((message.likes.indexOf(username) > -1)){
+			console.log('Already upvoted');
+		} else {
+			message.likes.push(username);
+		}
+
+		this.api.likesAdjuster(message, function(message){
+			AppDispatcher.dispatch({
+				actionType: FeedConstants.VIEW_MESSAGES,
+				data: message
+			});
 		})
 	}
 
