@@ -14,14 +14,14 @@ npm install
 jspm install
 ```
 
-## Build
-```bash
-gulp
-```
-
-## Run
+## Start backend server
 ```bash
 npm start
 ```
-Visit localhost:5000
+
+## Run client
+```bash
+gulp
+```
+localhost:3000
 
