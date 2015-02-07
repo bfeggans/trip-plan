@@ -36,7 +36,7 @@ var Feed = React.createClass({
       // id: (Math.floor(Math.random() * 1000)),
       id: null,
       tripId: this.props.tripId,
-      date: Date.now(),
+      date: Date.now()
     });
 
     this.setState({messageText: ""})
