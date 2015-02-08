@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import _ from 'underscore';
 
 export default class TripApi {
 
@@ -9,20 +10,38 @@ export default class TripApi {
 
   getTrips(cb) {
     $.get('http://trip-plan.firebaseio.com/trips.json', function(response) {
-      cb(response);
+      // format firebase data with nested id
+      var tripData = _.filter(response, function(val, key) {
+        var record = val;
+        record.id = key;
+        return record;
+      });
+      cb(tripData);
+    });
+  }
+
+  getTrip(id, cb) {
+    $.get('http://trip-plan.firebaseio.com/trips/' + id +'.json', function(response) {
+      // format firebase data with nested id
+      var tripData = response;
+      tripData.id = id;
+      cb([tripData]); // return an array intentionally
     });
   }
 
   createTrip(attrs, cb) {
-    let id = this.firebaseRef.push().key();
     var trip = {
       name: attrs.name,
       description: attrs.description,
       destination: attrs.destination,
       travelDates: attrs.travelDates,
       invitees: attrs.invitees,
-      id: id
     }
+
+    var id = this.firebaseRef.push(trip);
+    trip.id = id.key();
+
+    // separate call to fire off emails
     $.ajax({
       type: 'POST',
       data: JSON.stringify(trip),
@@ -32,7 +51,7 @@ export default class TripApi {
         console.log(result);
       }
     });
-    this.firebaseRef.push(trip);
+
     cb(trip);
   }
 

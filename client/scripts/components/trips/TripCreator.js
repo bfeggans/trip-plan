@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
 import TripActions from '../../actions/TripActions';
+import UserStore from '../../stores/UserStore';
 
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
@@ -13,7 +14,8 @@ var TripCreator = React.createClass({displayName: "TripCreator",
       destination: "",
       travelDates: "",
       name: "",
-      description: ""
+      description: "",
+      currentUser: UserStore.getCurrentUser().password.email
     };
   },
   destinationOnChange(e) { this.setState({destination: e.target.value}); },
@@ -29,12 +31,15 @@ var TripCreator = React.createClass({displayName: "TripCreator",
 
     this.validateForm().then(function(result) {
 
+      this.state.invitees.push(this.state.currentUser);
+      var invitees = this.state.invitees;
+
       TripActions.createTrip({
         name: this.state.name,
         description: this.state.description,
         destination: this.state.destination,
         travelDates: this.state.travelDates,
-        invitees: this.state.invitees
+        invitees: invitees
       }, function (trip) {
         this.transitionTo('trip', { id: trip.id });
       }.bind(this));
