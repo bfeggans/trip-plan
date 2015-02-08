@@ -10,6 +10,7 @@ import _ from 'underscore';
 var _trips = [];
 
 function _loadTripData(data) {
+  // TODO merge _trips and data;
   _trips = data;
 }
 function _addTrip(data) {

@@ -10,8 +10,34 @@ import _ from 'underscore';
 var _invitations = [];
 
 function _loadInvitationData(data) {
+  data.map( (invite) => {
+    if(!_.findWhere(_invitations, {id:invite.id})) {
+      _invitations.push(invite)
+    }
+  });
+}
 
-  data.map( (invite) => _invitations.push(invite) );
+function _updateInvitation(invite) {
+
+  var indexOf = function(id, items) {
+    var i = 0;
+    var len = items.length;
+    for (i = 0; i < len; i++) {
+      if (id === items[i].id) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  var index = indexOf(invite.id, _invitations)
+
+  if(index === -1) {
+    _invitations.push(invite)
+  } else {
+    _invitations[index] = invite;
+  }
+  
 }
 
 class InvitationStore extends Store {
@@ -36,7 +62,7 @@ AppDispatcher.register(function(payload) {
       _loadInvitationData(payload.data);
       break;
     case InvitationConstants.RESPOND_INVITATION:
-      //_loadInvitationData(payload.data); // TODO update the invitations
+      _updateInvitation(payload.data);
       break;
 
     default:

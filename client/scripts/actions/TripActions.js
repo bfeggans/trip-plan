@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import _ from 'underscore';
 import TripConstants from '../constants/TripConstants';
+import TripStore from '../stores/TripStore';
 
 import TripApi from '../../utils/TripApi';
 
@@ -10,16 +11,31 @@ class TripActions {
     this.api = new TripApi();
   }
 
-  requestTripData() {
-    this.api.getTrips(function(response) {
-      var tripData = _.map(response, function(val, key) {
-        return val;
+  requestTripData(id) {
+    // if an ID is specified check to see if it is in the store before
+    // fetching from the remote database
+    if(id) {
+      var trip = TripStore.getTripDetails(id);
+      if(trip) {
+        // record found - noop
+      } else {
+        this.api.getTrip(id, function(response) {
+          AppDispatcher.dispatch({
+            actionType: TripConstants.RECEIVE_DATA,
+            data: response
+          });
+        });
+      }
+    } else {
+      // if no id in params, then get all the trips
+      // we don't check the store here in favor of getting fresh data
+      this.api.getTrips(function(response) {
+        AppDispatcher.dispatch({
+          actionType: TripConstants.RECEIVE_DATA,
+          data: response
+        });
       });
-      AppDispatcher.dispatch({
-        actionType: TripConstants.RECEIVE_DATA,
-        data: tripData
-      });
-    });
+    }
   }
 
   createTrip(attrs, cb) {

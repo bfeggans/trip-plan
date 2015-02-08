@@ -12,7 +12,8 @@ import Authentication from '../mixins/AuthenticationMixin';
 function getTripState(id) {
   return {
     tripDetails: TripStore.getTripDetails(id),
-    invitations: InvitationStore.getTripInvitations(id)
+    invitations: InvitationStore.getTripInvitations(id),
+    currentUser: UserStore.getCurrentUser().password.email
   }
 }
 
@@ -20,29 +21,24 @@ var Trip = React.createClass({
 
   mixins: [ Router.State, Authentication ],
 
-  // TODO
-  // router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
   getInitialState: function() {
     var id = this.getParams().id;
+
+    TripActions.requestTripData(id);
+    InvitationActions.requestTripInvitations(id);
+
     return getTripState(id);
   },
   componentDidMount: function() {
-
     TripStore.addChangeListener(this._onChange, this);
     InvitationStore.addChangeListener(this._onChange, this);
-
-    // TODO only getRemoteData if it hasn't happened yet
-    TripActions.requestTripData();
-
-    // TODO wait for TripStore id
-    InvitationActions.requestTripInvitations(this.getParams().id);
   },
   componentWillUnmount: function() {
     TripStore.removeChangeListener(this._onChange, this);
     InvitationStore.removeChangeListener(this._onChange, this);
   },
   respondToInvitation: function () {
-    var myInvite = _.find(this.state.invitations, {email: UserStore.getCurrentUser().password.email});
+    var myInvite = _.find(this.state.invitations, {email: this.state.currentUser});
 
     InvitationActions.respondToInvitation({
       id: myInvite.id,
@@ -54,9 +50,16 @@ var Trip = React.createClass({
   render: function() {
 
     var trip = this.state.tripDetails || {};
-    var myInvite = _.find(this.state.invitations, {email: "me@iamjsmith.com"});
+    var invitations = this.state.invitations || [];
+    var myInvite = _.find(this.state.invitations, {email: this.state.currentUser});
 
-    if(myInvite && myInvite.status === "confirmed") {
+    if(!myInvite) {
+      var rsvpCard = (
+        <div className="confirm-form">
+          <h1>Bro, are you even invited?</h1>
+        </div>
+      )
+    } else if(myInvite && myInvite.status === "confirmed") {
       var rsvpCard = (
         <div className="confirm-form">
           <h1>You are coming!</h1>
@@ -71,21 +74,21 @@ var Trip = React.createClass({
       )
     }
 
-    if (trip.invitees && trip.invitees.length) {
+    if (invitations && invitations.length) {
       var inviteesList = (
         <div className="extra content">
           <a>
             <i className="user icon"></i>
-            {trip.invitees && trip.invitees.length} Friends
+            {invitations && invitations.length} Friends
           </a>
           <div className="ui list">
-            {trip.invitees.map(function(invitee) {
+            {invitations.map(function(invitee) {
               return (
                 <div className="item">
                   <img className="ui avatar image" src="http://semantic-ui.com/images/avatar/small/daniel.jpg" />
                   <div className="content">
-                    <a className="header">{invitee}</a>
-                    <div className="description">"I'm ready to get that money on this trip"</div>
+                    <a className="header">{invitee.email}</a>
+                    <div className="description">{invitee.status}</div>
                   </div>
                 </div>
               )
@@ -111,6 +114,7 @@ var Trip = React.createClass({
               { trip.description }
             </div>
           </div>
+          {/* TODO turn this into a separate component */}
           <div className="image">
             <img src="http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg" />
             {rsvpCard}
