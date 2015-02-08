@@ -34,8 +34,6 @@ var TripMain = React.createClass({displayName: "TripMain",
   },
 
   render: function() {
-    console.log(this.state.trips);
-
     return (
       React.createElement("div", null, 
         React.createElement("div", {className: "ui horizontal divider"}, 

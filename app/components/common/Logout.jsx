@@ -1,9 +1,20 @@
 import React from 'react';
-import Auth from '../../utils/auth';
+import UserActions from '../../actions/UserActions';
+import Router from 'react-router';
+
+var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
 var Logout = React.createClass({
+
+  mixins: [ Router.Navigation, Router.State ],
+
   componentDidMount: function () {
-    Auth.logout();
+    UserActions.logoutUser();
+  },
+
+  willTransitionTo: function (transition) {
+    Login.attemptedTransition = transition;
+    transition.redirect('/login');
   },
 
   render: function () {

@@ -5,10 +5,33 @@ var BASE_URL = "http://trip-plan.herokuapp.com/#/trip/";
 
 var _createTrip = function (req, res) {
 
-  var inviteesRef = new firebase("https://trip-plan.firebaseio.com/invitees");
-  inviteesRef.set(req.body.invitees);
+  /* invite model looks something like
+   * {
+   *  id: pk
+   *  email: string,
+   *  tripId: string,
+   *  invitedBy: string,
+   *  personalMessage: string,
+   *  createDate: date,
+   *  status: string,
+   *  responseMessage: string,
+   *  ? emailSeen
+   *  ? emailDispatchDate
+   * }
+   */
+
+  const STATUS_INVITED = "invited";
+
+  var invitationsRef = new firebase("https://trip-plan.firebaseio.com/invitations");
 
   req.body.invitees.map(function(toEmail) {
+
+    invitationsRef.push({
+      email: toEmail,
+      tripId: req.body.id,
+      status: STATUS_INVITED
+    });
+
     var message = {
       "subject": req.body.name,
       "from_email": "trip@plan.com",

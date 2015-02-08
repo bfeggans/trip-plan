@@ -1,9 +1,5 @@
 /*
  * Trip Store
- *
- * Implements:
- *  getAll
- *  create
  */
 
 import {Store} from './Store';

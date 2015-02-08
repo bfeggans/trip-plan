@@ -35,4 +35,3 @@ class TripActions {
 }
 
 export default new TripActions();
-

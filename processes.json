@@ -1,0 +1,11 @@
+{
+  "name"        : "app",
+  "script"      : "server/app.js",
+  "log_date_format"  : "YYYY-MM-DD HH:mm Z",
+  "ignore_watch" : ["node_modules"],
+  "watch"       : ["server"],
+  "node_args"   : "--harmony",
+  "env": {
+      "NODE_ENV": "development"
+  }
+}

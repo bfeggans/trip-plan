@@ -3,13 +3,14 @@ import Router from 'react-router';
 import FeedActions from '../../actions/FeedActions';
 import FeedStore from '../../stores/FeedStore';
 import Card from '../common/Card';
+import UserStore from '../../stores/UserStore';
 
 var getMessages = function(id){
   return {
-    messages: FeedStore.getFeedsByTripId(id)
+    messages: FeedStore.getFeedsByTripId(id),
+    user: UserStore.getCurrentUser().password
   }
 }
-var twitterObj = JSON.parse(localStorage['twitter'] || '{}');
 
 var Feed = React.createClass({displayName: "Feed",
 
@@ -31,7 +32,7 @@ var Feed = React.createClass({displayName: "Feed",
   },
   createMessage:function(){
     FeedActions.createMessage({
-      author: twitterObj.displayName,
+      author: this.state.user.email, // TODO we need to add displayName to the profile
       messageText: this.state.messageText,
       // id: (Math.floor(Math.random() * 1000)),
       id: null,
@@ -45,7 +46,7 @@ var Feed = React.createClass({displayName: "Feed",
     FeedActions.removeMessage(childComponent.props.message.id);
   },
   handleLikes:function(childComponent, username){
-    FeedActions.likeMachine(childComponent.props.message, twitterObj.username);
+    FeedActions.likeMachine(childComponent.props.message, this.state.user.email);
   },
   messageOnChange:function(e){
     this.setState({messageText: e.target.value});
@@ -58,7 +59,8 @@ var Feed = React.createClass({displayName: "Feed",
     return (
       React.createElement("div", null, 
          messages.map(function(message) {
-          return React.createElement(Card, {message: message, profPic:  twitterObj.cachedUserProfile.profile_image_url, handleLikes:  this.handleLikes, handleRemoveMessage:  this.handleRemoveMessage})
+          {/* TODO add back in profPic={ twitterObj.cachedUserProfile.profile_image_url }} */}
+          return React.createElement(Card, {message: message, handleLikes:  this.handleLikes, handleRemoveMessage:  this.handleRemoveMessage})
         }, this), 
         React.createElement("div", {className: "ui action left icon input"}, 
           React.createElement("input", {type: "text", onChange:  this.messageOnChange, value:  this.state.messageText, placeholder: "Comment here..."}), 
