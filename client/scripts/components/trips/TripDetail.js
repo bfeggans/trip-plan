@@ -2,18 +2,23 @@ import React from 'react';
 import Router from 'react-router';
 import TripActions from '../../actions/TripActions';
 import TripStore from '../../stores/TripStore';
-
 import Feed from '../feed/Feed';
+import InvitationActions from '../../actions/InvitationActions';
+import InvitationStore from '../../stores/InvitationStore';
+import _ from 'underscore';
+import UserStore from '../../stores/UserStore';
+import Authentication from '../mixins/AuthenticationMixin';
 
 function getTripState(id) {
   return {
-    tripDetails: TripStore.getTripDetails(id)
+    tripDetails: TripStore.getTripDetails(id),
+    invitations: InvitationStore.getTripInvitations(id)
   }
 }
 
 var Trip = React.createClass({displayName: "Trip",
 
-  mixins: [ Router.Navigation, Router.State ],
+  mixins: [ Router.State, Authentication ],
 
   // TODO
   // router stuff, see: https://github.com/rackt/react-router/blob/master/examples/master-detail/app.js
@@ -21,24 +26,50 @@ var Trip = React.createClass({displayName: "Trip",
     var id = this.getParams().id;
     return getTripState(id);
   },
-
   componentDidMount: function() {
-    // Listen for the TripStore to change
+
     TripStore.addChangeListener(this._onChange, this);
+    InvitationStore.addChangeListener(this._onChange, this);
 
     // TODO only getRemoteData if it hasn't happened yet
     TripActions.requestTripData();
-  },
 
+    // TODO wait for TripStore id
+    InvitationActions.requestTripInvitations(this.getParams().id);
+  },
   componentWillUnmount: function() {
     TripStore.removeChangeListener(this._onChange, this);
+    InvitationStore.removeChangeListener(this._onChange, this);
   },
+  respondToInvitation: function () {
+    var myInvite = _.find(this.state.invitations, {email: UserStore.getCurrentUser().password.email});
 
+    InvitationActions.respondToInvitation({
+      id: myInvite.id,
+      email: UserStore.getCurrentUser().password.email,
+      tripId: this.state.tripDetails.id,
+      status: 'confirmed'
+    });
+  },
   render: function() {
 
     var trip = this.state.tripDetails || {};
+    var myInvite = _.find(this.state.invitations, {email: "me@iamjsmith.com"});
 
-    console.log('rendering', trip)
+    if(myInvite && myInvite.status === "confirmed") {
+      var rsvpCard = (
+        React.createElement("div", {className: "confirm-form"}, 
+          React.createElement("h1", null, "You are coming!")
+        )
+      )
+    } else {
+      var rsvpCard = (
+        React.createElement("div", {className: "confirm-form"}, 
+          React.createElement("h1", null, "Are you coming?"), 
+          React.createElement("div", {onClick: this.respondToInvitation, className: "ui massive inverted teal button"}, "Hell yeah!")
+        )
+      )
+    }
 
     if (trip.invitees && trip.invitees.length) {
       var inviteesList = (
@@ -82,10 +113,7 @@ var Trip = React.createClass({displayName: "Trip",
           ), 
           React.createElement("div", {className: "image"}, 
             React.createElement("img", {src: "http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg"}), 
-            React.createElement("div", {className: "confirm-form"}, 
-              React.createElement("h1", null, "Are you coming?"), 
-              React.createElement("div", {className: "ui massive inverted teal button"}, "Hell yeah!")
-            )
+            rsvpCard
           ), 
           inviteesList
         ), 

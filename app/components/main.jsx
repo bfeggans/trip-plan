@@ -1,4 +1,3 @@
-import Auth from '../utils/auth';
 import React from 'react';
 import Router from 'react-router';
 
@@ -14,29 +13,30 @@ import Logout from './common/Logout';
 import Trip from './trips/TripDetail';
 import TripCreator from './trips/TripCreator';
 
+import UserStore from '../../stores/UserStore';
+import UserActions from '../../actions/UserActions';
 
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
 
 /*
  * Application Component
  */
-
 var App = React.createClass({
   getInitialState: function () {
     return {
-      loggedIn: Auth.loggedIn()
+      loggedIn: UserStore.getCurrentUser()
     };
   },
 
-  setStateOnAuth: function (loggedIn) {
-    this.setState({
-      loggedIn: loggedIn
-    });
+  componentDidMount: function() {
+    UserStore.addChangeListener(this._onChange, this);
   },
 
-  componentWillMount: function () {
-    Auth.onChange = this.setStateOnAuth;
-    //Auth.twitterLogin();
+  _onChange: function () {
+    var user = UserStore.getCurrentUser();
+    if(user) {
+      this.setState({loggedIn: user});
+    }
   },
 
   render: function () {
@@ -75,8 +75,6 @@ var App = React.createClass({
  * Define Routes
  */
 
-// TODO we need to refer to a trip by id not destination
-// ala trip/:id
 var routes = (
   <Route handler={App}>
     <Route name="login" handler={Login} addHandlerKey={true} />
@@ -92,9 +90,13 @@ var routes = (
 /*
  * Start Application
  */
-
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.getElementById('app'));
-});
+var _startApplication = function() {
+  UserStore.removeChangeListener(_startApplication);
+  Router.run(routes, function (Handler) {
+    React.render(<Handler/>, document.getElementById('app'));
+  });
+}
+UserStore.addChangeListener(_startApplication);
+UserActions.checkLoggedIn();
 
 export default {}

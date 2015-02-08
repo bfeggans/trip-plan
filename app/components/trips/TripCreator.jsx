@@ -16,18 +16,10 @@ var TripCreator = React.createClass({
       description: ""
     };
   },
-  destinationOnChange: function(e){
-    this.setState({destination: e.target.value});
-  },
-  travelDatesOnChange: function(e){
-    this.setState({travelDates: e.target.value});
-  },
-  descriptionOnChange: function(e){
-    this.setState({description: e.target.value});
-  },
-  nameOnChange: function(e){
-    this.setState({name: e.target.value});
-  },
+  destinationOnChange(e) { this.setState({destination: e.target.value}); },
+  travelDatesOnChange(e) { this.setState({travelDates: e.target.value}); },
+  descriptionOnChange(e) { this.setState({description: e.target.value}); },
+  nameOnChange(e) { this.setState({name: e.target.value}); },
   inviteesOnChange: function(e){
     var invitees = e.target.value.split(',');
     this.setState({invitees: invitees});

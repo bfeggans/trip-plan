@@ -2,46 +2,65 @@ class Auth  {
   constructor(){
     this.firebaseURL = "https://trip-plan.firebaseio.com";
   }
+
   twitterLogin(cb) {
 
     var that = this;
     var ref = new Firebase(this.firebaseURL);
 
-    if (localStorage.token) {
-      if (cb) cb(true);
-      this.onChange(true);
-      return;
-    }
-
     ref.authWithOAuthPopup("twitter", function(error, authData) {
+
+      console.log(authData);
+
       if (error) {
-        if(cb) cb(false);
-        that.onChange(false);
+        if(cb) cb(error);
       } else {
-        localStorage.token = authData.token;
-        console.log(authData.twitter);
-        localStorage.twitter = JSON.stringify(authData.twitter);
-        if(cb) cb(true);
-        that.onChange(true);
+        //if(cb) cb(null, authData.twitter, authData.token);
       }
     });
 
   }
-  getToken() {
-    return localStorage.token;
+
+  _firebaseLogin(email, password, cb) {
+    var ref = new Firebase(this.firebaseURL);
+    ref.authWithPassword({
+      email    : email,
+      password : password
+    }, cb);
   }
-  logout(cb) {
-    delete localStorage.token;
-    if (cb) cb();
-    this.onChange(false);
+
+  loginUser(email, password, cb) {
+    var that = this;
+    this._firebaseLogin(email, password, function(error, authData) {
+      if (error) {
+        if(error.code === "INVALID_USER")  {
+          that.registerUser(email, password, function(err, authData) {
+            that._firebaseLogin(email, password, function(error, authData) {
+              cb(null, authData);
+            });
+          });
+        } else {
+          cb(error.message, null);
+        }
+      } else {
+        cb(null, authData);
+      }
+    });
   }
-  loggedIn() {
-    return !!localStorage.token;
+
+  registerUser(email, password, cb) {
+    var ref = new Firebase(this.firebaseURL);
+    ref.createUser({
+      email    : email,
+      password : password
+    }, function(error) {
+      if (error === null) {
+        cb();
+      } else {
+        console.log("Error creating user:", error);
+      }
+    });
   }
-  onChange() {}
+
 }
 export default new Auth();
-
-
-
-

@@ -1,10 +1,11 @@
-import Auth from '../../utils/auth';
+import UserStore from '../../stores/UserStore';
+import UserActions from '../../actions/UserActions';
 import Login from '../common/Login';
 
 var Authentication = {
   statics: {
     willTransitionTo: function (transition) {
-      if (!Auth.loggedIn()) {
+      if (!UserStore.getCurrentUser()) {
         Login.attemptedTransition = transition;
         transition.redirect('/login');
       }
