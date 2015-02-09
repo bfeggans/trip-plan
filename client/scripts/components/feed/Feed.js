@@ -42,7 +42,11 @@ var Feed = React.createClass({displayName: "Feed",
     this.setState({messageText: ""})
   },
   handleRemoveMessage:function(childComponent){
-    FeedActions.removeMessage(childComponent.props.message.id);
+    if (this.state.user.email === childComponent.props.message.author){
+      FeedActions.removeMessage(childComponent.props.message.id);
+    } else {
+      console.log('You aint post it - you aint deletin it');
+    };
   },
   handleLikes:function(childComponent, username){
     FeedActions.likeMachine(childComponent.props.message, this.state.user.email);
