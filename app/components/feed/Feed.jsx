@@ -34,7 +34,6 @@ var Feed = React.createClass({
     FeedActions.createMessage({
       author: this.state.user.email, // TODO we need to add displayName to the profile
       messageText: this.state.messageText,
-      // id: (Math.floor(Math.random() * 1000)),
       id: null,
       tripId: this.props.tripId,
       date: Date.now()

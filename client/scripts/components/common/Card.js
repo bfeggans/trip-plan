@@ -24,6 +24,9 @@ var Card = React.createClass({displayName: "Card",
   	}
   },
 	createCard: function(message, index){
+			// if(message.messageText.startsWith('http') || message.messageText.startsWith('www')){
+			// 	var stuffVar = '';
+			// };
 			return (
 				React.createElement("div", {key:  message.id, className: "event"}, 
 	        React.createElement("div", {className: "label"}, 
@@ -37,7 +40,7 @@ var Card = React.createClass({displayName: "Card",
 	            )
 	          ), 
 	          React.createElement("div", {className: "extra text"}, 
-	             message.messageText
+	            React.createElement("td", {dangerouslySetInnerHTML: {__html: message.messageText}})
 	          ), 
 	          React.createElement("div", {className: "meta"}, 
 	            React.createElement("a", {onClick:  this.callParentLikes, className: "like"}, 

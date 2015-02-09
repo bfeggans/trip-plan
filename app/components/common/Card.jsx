@@ -24,6 +24,9 @@ var Card = React.createClass({
   	}
   },
 	createCard: function(message, index){
+			// if(message.messageText.startsWith('http') || message.messageText.startsWith('www')){
+			// 	var stuffVar = '';
+			// };
 			return (
 				<div key={ message.id } className="event">
 	        <div className="label">
@@ -37,7 +40,7 @@ var Card = React.createClass({
 	            </div>
 	          </div>
 	          <div className="extra text">
-	            { message.messageText }
+	            <td dangerouslySetInnerHTML={{__html: message.messageText}} />
 	          </div>
 	          <div className="meta">
 	            <a onClick={ this.callParentLikes } className="like">

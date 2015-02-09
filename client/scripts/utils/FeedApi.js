@@ -57,9 +57,7 @@ export default class FeedApi {
   }
 
   likesAdjuster(message, cb){
-    console.log(message.id);
     var url = 'https://trip-plan.firebaseio.com/messages/' + message.id + '.json';
-    console.log(message);
 
     $.ajax({
       url: url,
