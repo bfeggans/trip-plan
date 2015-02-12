@@ -48,6 +48,11 @@ var Feed = React.createClass({displayName: "Feed",
       console.log('You aint post it - you aint deletin it');
     };
   },
+  handleSubmit:function(e){
+    if (e.which === 13){
+      this.createMessage();
+    }
+  },
   handleLikes:function(childComponent, username){
     FeedActions.likeMachine(childComponent.props.message, this.state.user.email);
   },
@@ -66,7 +71,7 @@ var Feed = React.createClass({displayName: "Feed",
           return React.createElement(Card, {message: message, handleLikes:  this.handleLikes, handleRemoveMessage:  this.handleRemoveMessage})
         }, this), 
         React.createElement("div", {className: "ui action left icon input"}, 
-          React.createElement("input", {type: "text", onChange:  this.messageOnChange, value:  this.state.messageText, placeholder: "Comment here..."}), 
+          React.createElement("input", {type: "text", onChange:  this.messageOnChange, value:  this.state.messageText, onKeyDown:  this.handleSubmit, placeholder: "Comment here..."}), 
           React.createElement("div", {className: "ui teal button", onClick:  this.createMessage}, "Add")
         )
       )

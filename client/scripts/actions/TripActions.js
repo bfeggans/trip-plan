@@ -11,7 +11,7 @@ class TripActions {
     this.api = new TripApi();
   }
 
-  requestTripData(id) {
+  requestTripData(id, user) {
     // if an ID is specified check to see if it is in the store before
     // fetching from the remote database
     if(id) {
@@ -29,7 +29,7 @@ class TripActions {
     } else {
       // if no id in params, then get all the trips
       // we don't check the store here in favor of getting fresh data
-      this.api.getTrips(function(response) {
+      this.api.getTrips(user, function(response) {
         AppDispatcher.dispatch({
           actionType: TripConstants.RECEIVE_DATA,
           data: response

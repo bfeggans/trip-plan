@@ -48,6 +48,11 @@ var Feed = React.createClass({
       console.log('You aint post it - you aint deletin it');
     };
   },
+  handleSubmit:function(e){
+    if (e.which === 13){
+      this.createMessage();
+    }
+  },
   handleLikes:function(childComponent, username){
     FeedActions.likeMachine(childComponent.props.message, this.state.user.email);
   },
@@ -66,7 +71,7 @@ var Feed = React.createClass({
           return <Card message={ message } handleLikes={ this.handleLikes } handleRemoveMessage={ this.handleRemoveMessage }/>
         }, this) }
         <div className="ui action left icon input">
-          <input type="text" onChange={ this.messageOnChange } value={ this.state.messageText } placeholder="Comment here..." />
+          <input type="text" onChange={ this.messageOnChange } value={ this.state.messageText } onKeyDown={ this.handleSubmit } placeholder="Comment here..." />
           <div className="ui teal button" onClick={ this.createMessage }>Add</div>
         </div>
       </div>

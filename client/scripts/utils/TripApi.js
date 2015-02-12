@@ -8,13 +8,15 @@ export default class TripApi {
     this.firebaseRef = new Firebase(url);
   }
 
-  getTrips(cb) {
+  getTrips(user, cb) {
     $.get('http://trip-plan.firebaseio.com/trips.json', function(response) {
       // format firebase data with nested id
       var tripData = _.filter(response, function(val, key) {
         var record = val;
         record.id = key;
-        return record;
+        if (record.invitees.indexOf(user) > -1){
+          return record;
+        }
       });
       cb(tripData);
     });

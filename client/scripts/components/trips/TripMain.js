@@ -2,6 +2,7 @@ import React from 'react';
 import TripStore from '../../stores/TripStore';
 import TripActions from '../../actions/TripActions';
 import TripList from './TripList';
+import UserStore from '../../stores/UserStore';
 
 import Router from 'react-router';
 var { Route, RouteHandler, Link, DefaultRoute } = Router;
@@ -9,6 +10,7 @@ var { Route, RouteHandler, Link, DefaultRoute } = Router;
 function getTripState() {
   return {
     trips: TripStore.getTrips(),
+    user: UserStore.getCurrentUser().password
   }
 }
 
@@ -21,7 +23,7 @@ var TripMain = React.createClass({displayName: "TripMain",
     TripStore.addChangeListener(this._onChange, this);
 
     // TODO only getRemoteData if it hasn't happened yet
-    TripActions.requestTripData();
+    TripActions.requestTripData(null, this.state.user.email);
   },
   componentWillUnmount: function() {
     TripStore.removeChangeListener(this._onChange, this);
