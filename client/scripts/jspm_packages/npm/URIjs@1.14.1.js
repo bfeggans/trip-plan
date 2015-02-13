@@ -1,0 +1,1 @@
+module.exports = require("npm:URIjs@1.14.1/src/URI");

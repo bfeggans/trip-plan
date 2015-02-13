@@ -28,8 +28,9 @@ class FeedActions {
 	createMessage(attrs){
 		var that = this;
 		var link = attrs.messageText.trim();
+		console.log(link.indexOf(' '));
 
-		if (link.indexOf('http') > -1){
+		if (link.startsWith('http') && link.indexOf(' ') === -1){
 			this.embed.getMedia(link, function(mediaTag){
  				attrs.messageText = mediaTag;    		
     		that.api.newMessage(attrs, function(response){
@@ -37,7 +38,7 @@ class FeedActions {
     		});
     	});
 		} else {
-			if (link.startsWith('www.') || (link.indexOf('.com')) > -1){
+			if (link.startsWith('www.') && link.indexOf(' ') === -1){
     		attrs.messageText = '<a href="http://'+attrs.messageText+'">'+attrs.messageText+'</a>';	
     	}
 			this.api.newMessage(attrs, function(response){
