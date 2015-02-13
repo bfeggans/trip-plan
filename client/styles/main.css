@@ -41,3 +41,21 @@ body {
 .ui.card, .ui.cards>.card {
 	width: 100%;
 }
+
+td {
+	padding-left: 2px;
+}
+
+.noembed-embed-inner img {
+	width: 200px !important;
+	height: 200px !important;
+	border-radius: 2px;
+}
+
+.noembed-meta-info {
+	font-size: 12px;
+}
+
+.favicon {
+	display: none;      
+}

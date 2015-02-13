@@ -24,9 +24,6 @@ var Card = React.createClass({
   	}
   },
 	createCard: function(message, index){
-			// if(message.messageText.startsWith('http') || message.messageText.startsWith('www')){
-			// 	var stuffVar = '';
-			// };
 			return (
 				<div key={ message.id } className="event">
 	        <div className="label">

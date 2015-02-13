@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import FeedConstants from '../constants/FeedConstants';
 import FeedApi from '../utils/FeedApi';
+import EmbedApi from '../utils/EmbedApi';
 import _ from 'underscore';
 
 
@@ -8,80 +9,54 @@ class FeedActions {
 
 	constructor(){
 		this.api = new FeedApi();
+		this.embed = new EmbedApi();
 	}
+
+	messageDispatching(response){
+		var messageData = _.map(response, function(val, key){
+			if(val){
+				val.id = key;
+				return val;
+			}
+		});
+		AppDispatcher.dispatch({
+			actionType: FeedConstants.VIEW_MESSAGES,
+			data: messageData
+		});
+	};
 
 	createMessage(attrs){
 		var that = this;
+		var link = attrs.messageText.trim();
 
-		if (attrs.messageText.indexOf('youtube.com/') > -1){
-			$.ajax({
-        url: 'http://query.yahooapis.com/v1/public/yql',
-        data: {
-            q: "select * from json where url ='http://www.youtube.com/oembed?url=" + attrs.messageText + "&format=json'",
-            format: "json"
-          },
-        dataType: "jsonp",
-        success:function(response){
-	        attrs.messageText = response.query.results.json.html;
-
-        	that.api.newMessage(attrs, function(response){
-						var messageData = _.map(response, function(val, key){
-							val.id = key;
-							return val;
-						});
-						AppDispatcher.dispatch({
-							actionType: FeedConstants.VIEW_MESSAGES,
-							data: messageData
-						});
-					});
-        }
-			})
+		if (link.indexOf('http') > -1){
+			this.embed.getMedia(link, function(mediaTag){
+ 				attrs.messageText = mediaTag;    		
+    		that.api.newMessage(attrs, function(response){
+    			that.messageDispatching(response);
+    		});
+    	});
 		} else {
-			if (attrs.messageText.startsWith('http://') || attrs.messageText.startsWith('https://')){
-    		attrs.messageText = '<a href="'+attrs.messageText+'">'+attrs.messageText+'</a>';	
-    	}	else if (attrs.messageText.startsWith('www.') || (attrs.messageText.indexOf('.com')) > -1){
+			if (link.startsWith('www.') || (link.indexOf('.com')) > -1){
     		attrs.messageText = '<a href="http://'+attrs.messageText+'">'+attrs.messageText+'</a>';	
     	}
 			this.api.newMessage(attrs, function(response){
-				var messageData = _.map(response, function(val, key){
-					val.id = key;
-					return val;
-				});
-				AppDispatcher.dispatch({
-					actionType: FeedConstants.VIEW_MESSAGES,
-					data: messageData
-				});
+    		that.messageDispatching(response);
 			});
 		}
 	}
 
 	viewMessages(tripId){
+		var that = this;
 		this.api.getMessages(function(response){
-			var messageData = _.map(response, function(val, key){
-				if(val){
-					val.id = key;
-					return val;
-				}
-			});
-			AppDispatcher.dispatch({
-				actionType: FeedConstants.VIEW_MESSAGES,
-				data: messageData
-			});
+			that.messageDispatching(response);
 		});
 	}
 
 	removeMessage(id){
+		var that = this;
 		this.api.removeMessage(id, function(response){
-			var messageData = _.map(response, function(val, key){
-				if(val){
-					val.id = key;
-					return val;
-				}
-			});
-			AppDispatcher.dispatch({
-				actionType: FeedConstants.VIEW_MESSAGES,
-				data: messageData
-			});
+			that.messageDispatching(response);
 		});
 	}
 
