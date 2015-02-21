@@ -76,7 +76,7 @@ var TripCreator = React.createClass({displayName: "TripCreator",
   },
   render: function(){
     return(
-      React.createElement("form", {className: "ui form", onSubmit:  this.createTrip}, 
+      React.createElement("form", {className: "full-width-padded ui form", onSubmit:  this.createTrip}, 
         React.createElement("div", {className: "field"}, 
           React.createElement("label", null, "Describe the trip"), 
           React.createElement("textarea", {onChange:  this.descriptionOnChange, placeholder: "Consider yourself a salesperson for this trip"})

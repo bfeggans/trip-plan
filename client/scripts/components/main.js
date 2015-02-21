@@ -59,13 +59,7 @@ var App = React.createClass({displayName: "App",
             loginOrOut
           )
         ), 
-        React.createElement("div", {className: "ui page grid"}, 
-          React.createElement("div", {className: "centered row"}, 
-            React.createElement("div", {className: "twelve wide column"}, 
-              React.createElement(RouteHandler, null)
-            )
-          )
-        )
+        React.createElement(RouteHandler, null)
       )
     );
   }

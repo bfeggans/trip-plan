@@ -3,13 +3,36 @@ body {
 	background: #fff;
 }
 
+h1 {
+	margin: 0;
+}
+
 .half-width {
 	width: 50%;
 }
 
-.full-width {
+.full-width-padded {
 	width: 100%;
+	padding: 50px;
 }
+
+.two-col-split {
+	display: -ms-flex;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.two-col-split > div {
+	flex: 1 1 400px;
+	padding: 10px;
+}
+
+/*.two-col-split > div:first-child {
+	border-right: 3px solid rgba(0, 0, 0, 0.1);
+	margin-right: 20px;
+}*/
 
 .centered,
 .ui.button.centered {
@@ -26,20 +49,15 @@ body {
 
 /* Page specific */
 .confirm-form {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
 	text-align: center;
 	background: rgba(0, 0, 0, 0.6);
-	color: #FFF;
+	color: #fff;
 	padding: 10% 0;
 }
 
 /* Overrides */
-.ui.card, .ui.cards>.card {
-	width: 100%;
+.ui.menu {
+	margin-bottom: 0;
 }
 
 td {
@@ -57,5 +75,5 @@ td {
 }
 
 .favicon {
-	display: none;      
+	display: none;
 }
