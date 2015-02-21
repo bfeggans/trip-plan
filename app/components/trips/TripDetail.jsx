@@ -100,30 +100,20 @@ var Trip = React.createClass({
 
     return (
       <div>
-        <div className="ui ignored positive icon message">
-          This trip has momentum. Contribute. Keep it alive!
-        </div>
-        {/* this ui card could probably be a separate reusable element */}
-        <div className="ui card">
-          <div className="content">
-            <a className="header">{ trip.destination }</a>
-            <div className="meta">
-              <span className="date">{ trip.travelDates }</span>
-            </div>
-            <div className="description">
-              { trip.description }
-            </div>
-          </div>
-          {/* TODO turn this into a separate component */}
-          <div className="image">
-            <img src="http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg" />
+        <div className="two-col-split">
+          <div> {/* left col */}
+            <header>
+              <h1 className="header">{ trip.destination }</h1>
+              {/* <div className="description">
+                { trip.travelDates }
+                { trip.description }
+              </div> */}
+            </header>
             {rsvpCard}
+            {inviteesList}
           </div>
-          {inviteesList}
+          <Feed tripId={ trip.id } /> {/* right col */}
         </div>
-
-        <Feed tripId={ trip.id } />
-
       </div>
     )
   },

@@ -37,7 +37,7 @@ var TripMain = React.createClass({displayName: "TripMain",
 
   render: function() {
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {className: "full-width-padded"}, 
         React.createElement("div", {className: "ui horizontal divider"}, 
           "Get Excited"
         ), 

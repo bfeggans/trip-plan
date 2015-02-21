@@ -59,13 +59,7 @@ var App = React.createClass({
             {loginOrOut}
           </div>
         </div>
-        <div className="ui page grid">
-          <div className="centered row">
-            <div className="twelve wide column">
-              <RouteHandler/>
-            </div>
-          </div>
-        </div>
+        <RouteHandler/>
       </div>
     );
   }

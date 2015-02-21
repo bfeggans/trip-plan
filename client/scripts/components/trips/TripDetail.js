@@ -100,30 +100,20 @@ var Trip = React.createClass({displayName: "Trip",
 
     return (
       React.createElement("div", null, 
-        React.createElement("div", {className: "ui ignored positive icon message"}, 
-          "This trip has momentum. Contribute. Keep it alive!"
-        ), 
-        /* this ui card could probably be a separate reusable element */
-        React.createElement("div", {className: "ui card"}, 
-          React.createElement("div", {className: "content"}, 
-            React.createElement("a", {className: "header"},  trip.destination), 
-            React.createElement("div", {className: "meta"}, 
-              React.createElement("span", {className: "date"},  trip.travelDates)
+        React.createElement("div", {className: "two-col-split"}, 
+          React.createElement("div", null, " ", /* left col */
+            React.createElement("header", null, 
+              React.createElement("h1", {className: "header"},  trip.destination)
+              /* <div className="description">
+                { trip.travelDates }
+                { trip.description }
+              </div> */
             ), 
-            React.createElement("div", {className: "description"}, 
-               trip.description
-            )
+            rsvpCard, 
+            inviteesList
           ), 
-          /* TODO turn this into a separate component */
-          React.createElement("div", {className: "image"}, 
-            React.createElement("img", {src: "http://upload.wikimedia.org/wikipedia/commons/d/dc/PIA17944-MarsCuriosityRover-AfterCrossingDingoGapSanddune-20140209.jpg"}), 
-            rsvpCard
-          ), 
-          inviteesList
-        ), 
-
-        React.createElement(Feed, {tripId:  trip.id})
-
+          React.createElement(Feed, {tripId:  trip.id}), " "/* right col */
+        )
       )
     )
   },
