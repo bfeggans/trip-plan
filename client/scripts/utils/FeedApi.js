@@ -8,7 +8,7 @@ export default class FeedApi {
   }
 
   getMessages(cb) {
-    $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
+    $.get('https://trip-plan.firebaseio.com/messages.json', function(response) {
       cb(response);
     });
   }
@@ -33,7 +33,7 @@ export default class FeedApi {
     //   }
     // });
     this.firebaseRef.push(message, function(){
-      $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
+      $.get('https://trip-plan.firebaseio.com/messages.json', function(response) {
         cb(response);
       })
     });
@@ -49,7 +49,7 @@ export default class FeedApi {
       type: 'DELETE',
       success: function(){
         //get the updated list of messages
-        $.get('http://trip-plan.firebaseio.com/messages.json', function(response) {
+        $.get('https://trip-plan.firebaseio.com/messages.json', function(response) {
           cb(response);
         })
       }
@@ -64,7 +64,7 @@ export default class FeedApi {
       type: 'PUT',
       data: JSON.stringify(message),
       success: function(){
-        $.get('http://trip-plan.firebaseio.com/messages.json', function(message) {
+        $.get('https://trip-plan.firebaseio.com/messages.json', function(message) {
           cb(message);
         })
       }

@@ -9,7 +9,7 @@ export default class TripApi {
   }
 
   getTrips(user, cb) {
-    $.get('http://trip-plan.firebaseio.com/trips.json', function(response) {
+    $.get('https://trip-plan.firebaseio.com/trips.json', function(response) {
       // format firebase data with nested id
       var tripData = _.filter(response, function(val, key) {
         var record = val;
@@ -23,7 +23,7 @@ export default class TripApi {
   }
 
   getTrip(id, cb) {
-    $.get('http://trip-plan.firebaseio.com/trips/' + id +'.json', function(response) {
+    $.get('https://trip-plan.firebaseio.com/trips/' + id +'.json', function(response) {
       // format firebase data with nested id
       var tripData = response;
       tripData.id = id;
